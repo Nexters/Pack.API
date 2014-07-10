@@ -5,9 +5,10 @@
  */
 var mongoose = require('mongoose'),
     Article = mongoose.model('Article'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    common = require('../../../common');
 
-
+common.nothing();
 /**
  * Find article by id
  */
@@ -91,7 +92,7 @@ exports.all = function(req, res) {
                 error: 'Cannot list the articles'
             });
         }
-        res.jsonp(articles);
-
+        res.success(articles);
+        //res.fail("0","error!!")
     });
 };

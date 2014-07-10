@@ -19,7 +19,6 @@ var mean = require('meanio'),
     config = mean.loadConfig();
 
 module.exports = function(app, passport, db) {
-
     app.set('showStackError', true);
 
     // Prettify HTML
@@ -61,6 +60,49 @@ module.exports = function(app, passport, db) {
     }));
     app.use(methodOverride());
 
+    /**
+     * Author : RANGKEN
+     * Add req,res base method either mobile/json or html/angluar response
+     *
+     */
+    app.use(function (req, res, next) {
+        res.isMobile = function(){
+            return req.get('Content-Type') === 'application/json';
+        }
+        /*
+        *   response success
+        *   @param {String} data : response object
+        */
+        res.success = function(data){
+            var response = {
+                status: '0',
+                msg: 'no msg',
+                data: data
+            };
+            if(this.isMobile()){
+                this.jsonp(response);
+            }else{
+                this.jsonp(data);
+            }
+        };
+        /*
+        *   response fail
+        *   @param {String} errorCode : error Code number
+        *   @param {String} errorMsg : error Message for client Alert text
+        */
+        res.fail = function(errorCode,errorMsg){
+            var response = {
+                status: errorCode,
+                msg: errorMsg
+            };
+            if(this.isMobile()){
+                this.jsonp(response);
+            }else{
+                this.jsonp(response);
+            }
+        };
+        next();
+    });
     // Import the assets file and add to locals
     var assets = assetmanager.process({
         assets: require('./assets.json'),
