@@ -76,7 +76,7 @@ module.exports = function(app, passport, db) {
         res.success = function(data){
             var response = {
                 status: '0',
-                msg: 'no msg',
+                msg: 'no error',
                 data: data
             };
             if(this.isMobile()){
@@ -90,10 +90,12 @@ module.exports = function(app, passport, db) {
         *   @param {String} errorCode : error Code number
         *   @param {String} errorMsg : error Message for client Alert text
         */
-        res.fail = function(errorCode,errorMsg){
+        res.fail = function(errorCode){
+            var location = req.query.local || 'ko'
+
             var response = {
                 status: errorCode,
-                msg: errorMsg
+                msg: config.error[location][errorCode]
             };
             if(this.isMobile()){
                 this.jsonp(response);

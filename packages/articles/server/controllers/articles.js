@@ -5,10 +5,8 @@
  */
 var mongoose = require('mongoose'),
     Article = mongoose.model('Article'),
-    _ = require('lodash'),
-    common = require('../../../common');
+    _ = require('lodash');
 
-common.nothing();
 /**
  * Find article by id
  */

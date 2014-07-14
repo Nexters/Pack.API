@@ -37,5 +37,6 @@ module.exports = {
             user: 'EMAIL_ID',
             pass: 'PASSWORD'
         }
-    }
+    },
+    error: require('../errors.json')
 };

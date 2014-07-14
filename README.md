@@ -12,6 +12,11 @@
 ## API 내용
 * Content-Type 으로 모바일 웹 구분? User-Agent 로 해도 될듯?
   - curl URL -H "Content-Type: application/json"
+* Token 인증 x-pack-username, x-pack-token 헤더로 인증함
+  - curl URL -H "Content-Type: application/json" -H "x-pack-username: rangken@gmail.com" -H "x-pack-token: asfasf"
+* 언어코드 보내주면 에러메세지 해당 내용으로 전송? 아직 안쓰고 나중위해서 , 기본 ko 로 되어있음
+  - curl URL?local=en/kr
+
 * {"status": "0", "msg": "에러내용", "data": "api 내용"} 으로 통일
 
 ## TODO

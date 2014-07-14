@@ -1,7 +1,7 @@
 <section data-ng-controller="UsersController" data-ng-init="find()">
     <ul class="users unstyled">
         <li data-ng-repeat="user in users">
-            <span>{{user.name}} / {{user.email}} / {{user.token}}</span>
+            <span>{{user.name}} / {{user.email}} / {{user._id}}</span>
         </li>
     </ul>
 </section>

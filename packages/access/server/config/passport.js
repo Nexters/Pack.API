@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
+    TokenStrategy = require('passport-token').Strategy,
     LocalStrategy = require('passport-local').Strategy,
     TwitterStrategy = require('passport-twitter').Strategy,
     FacebookStrategy = require('passport-facebook').Strategy,
@@ -9,7 +10,7 @@ var mongoose = require('mongoose'),
     LinkedinStrategy = require('passport-linkedin').Strategy,
     User = mongoose.model('User'),
     config = require('meanio').loadConfig();
-
+var common = require('../../../common');
 module.exports = function(passport) {
 
     // Serialize the user id to push into the session
@@ -26,7 +27,31 @@ module.exports = function(passport) {
             done(err, user);
         });
     });
+    // User Token strategy
+    passport.use(new TokenStrategy({
+            usernameHeader: 'x-pack-username',
+            tokenHeader:    'x-pack-token',
+            usernameField:  'pack-username',
+            tokenField:     'pack-token'
+        },
+        function (email, token, done) {
+            User.findOne({email: email}, function (err, user) {
+                if (err) {
+                    return done(err);
+                }
 
+                if (!user) {
+                    return done(null, false, common.errorMsg('100','user null'));
+                }
+
+                if (!user.verifyToken(token)) {
+                    return done(null, false);
+                }
+
+                return done(null, user);
+            });
+        }
+    ));
     // Use local strategy
     passport.use(new LocalStrategy({
             usernameField: 'email',

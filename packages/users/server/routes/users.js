@@ -5,14 +5,28 @@ var users = require('../controllers/users');
 
 module.exports = function(MeanUser, app, auth, database, passport) {
 
+    function authenticate(req, res, next) {
+        passport.authenticate('token', function (err, user, info) {
+            if (err) {
+                return next(err);
+            }
+            if (!user) {
+                res.fail('10001');
+            }
+            req.user = user;
+            next();
+        })(req,res,next);
+    }
+
     app.route('/users/:userId')
-        .get(users.show);
+        .get(authenticate, users.show);
 
     app.route('/users')
         .get(users.all);
 
     app.route('/logout')
         .get(users.signout);
+
     app.route('/users/me')
         .get(users.me);
 
@@ -38,7 +52,7 @@ module.exports = function(MeanUser, app, auth, database, passport) {
     // Setting the local strategy route
     app.route('/login')
         .post(passport.authenticate('local', {
-            failureFlash: true
+
         }), function(req, res) {
             res.send({
                 user: req.user,
