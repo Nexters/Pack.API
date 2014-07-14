@@ -5,6 +5,12 @@ var users = require('../controllers/users');
 
 module.exports = function(MeanUser, app, auth, database, passport) {
 
+    app.route('/users/:userId')
+        .get(users.show);
+
+    app.route('/users')
+        .get(users.all);
+
     app.route('/logout')
         .get(users.signout);
     app.route('/users/me')
@@ -14,7 +20,7 @@ module.exports = function(MeanUser, app, auth, database, passport) {
     app.route('/register')
         .post(users.create);
 
-		app.route('/forgot-password')
+	app.route('/forgot-password')
         .post(users.forgotpassword);
 
     app.route('/reset/:token')
@@ -100,5 +106,4 @@ module.exports = function(MeanUser, app, auth, database, passport) {
         .get(passport.authenticate('linkedin', {
             failureRedirect: '#!/login'
         }), users.authCallback);
-
 };

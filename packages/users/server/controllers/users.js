@@ -117,6 +117,7 @@ exports.me = function(req, res) {
  * Find user by id
  */
 exports.user = function(req, res, next, id) {
+
     User
         .findOne({
             _id: id
@@ -214,5 +215,26 @@ exports.forgotpassword = function(req, res, next) {
         else {
             res.jsonp(response);
         }
+    });
+};
+/**
+ * Show an User
+ */
+exports.show = function(req, res) {
+    //res.jsonp(req.user);
+    res.success(req.profile || null);
+};
+/**
+ * List of Users
+ */
+exports.all = function(req, res) {
+    User.find().sort('-created').populate('').exec(function(err, users) {
+        if (err) {
+            return res.jsonp(500, {
+                error: 'Cannot list the users'
+            });
+        }
+        res.success(users);
+        //res.fail("0","error!!")
     });
 };

@@ -19,9 +19,9 @@ Tips.register(function(app, auth, database) {
     //We are adding a link to the main menu for all authenticated users
     Tips.menus.add({
         title: 'tips example page',
-        link: 'tips example page',
-        roles: ['authenticated'],
-        menu: 'main'
+        link: 'tips',
+        roles: [''],
+        menu: 'main2'
     });
 
     /**

@@ -1,4 +1,4 @@
-'use strict';
+ 'use strict';
 
 /*
  * Defining the Package
@@ -28,7 +28,7 @@ System.register(function(app, auth, database) {
     // Setting the fav icon and static folder
     app.use(favicon(__dirname + '/public/assets/img/favicon.ico'));
 
-    // Adding robots and humans txt    
+    // Adding robots and humans txt
     app.use(express.static(__dirname + '/public/assets/static'));
 
     return System;

@@ -23,7 +23,6 @@ angular.module('mean.users').config(['$stateProvider',
             return deferred.promise;
         };
 
-
         // states for my app
         $stateProvider
             .state('auth', {
@@ -57,6 +56,10 @@ angular.module('mean.users').config(['$stateProvider',
                 resolve: {
                     loggedin: checkLoggedOut
                 }
+            })
+            .state('all users',{
+                url: '/users',
+                templateUrl: 'users/views/list.html'
             });
     }
 ]);

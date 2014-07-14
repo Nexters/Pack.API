@@ -55,6 +55,10 @@ var UserSchema = new Schema({
         type: String,
         default: 'local'
     },
+    token: {
+        type: String,
+        unique: true
+    },
     salt: String,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
@@ -72,6 +76,7 @@ UserSchema.virtual('password').set(function(password) {
     this._password = password;
     this.salt = this.makeSalt();
     this.hashed_password = this.hashPassword(password);
+    this.token = this.makeSalt();
 }).get(function() {
     return this._password;
 });

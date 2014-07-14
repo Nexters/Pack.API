@@ -20,12 +20,14 @@ Articles.register(function(app, auth, database) {
     Articles.menus.add({
         'roles': ['authenticated'],
         'title': 'Articles',
-        'link': 'all articles'
+        'link': 'all articles',
+        'menu': 'articles'
     });
     Articles.menus.add({
         'roles': ['authenticated'],
         'title': 'Create New Article',
-        'link': 'create article'
+        'link': 'create article',
+        'menu': 'articles'
     });
 
     //Articles.aggregateAsset('js','/packages/system/public/services/menus.js',{group:'footer',absolute:true, weight:-9999});

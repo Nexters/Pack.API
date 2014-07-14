@@ -10,24 +10,25 @@ angular.module('mean.system').controller('HeaderController', ['$scope', '$rootSc
 
         // Query menus added by modules. Only returns menus that user is allowed to see.
         function queryMenu(name, defaultMenu) {
-
             Menus.query({
                 name: name,
                 defaultMenu: defaultMenu
             }, function(menu) {
+                console.log(menu);
                 $scope.menus[name] = menu;
             });
         }
 
         // Query server for menus and check permissions
-        queryMenu('main', defaultMainMenu);
+        //queryMenu('main', defaultMainMenu);
+        queryMenu('articles', defaultMainMenu);
+        queryMenu('users', defaultMainMenu);
 
         $scope.isCollapsed = false;
 
         $rootScope.$on('loggedin', function() {
 
-            queryMenu('main', defaultMainMenu);
-
+            //queryMenu('main', defaultMainMenu);
             $scope.global = {
                 authenticated: !! $rootScope.user,
                 user: $rootScope.user
