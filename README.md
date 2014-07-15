@@ -8,8 +8,10 @@
 ## 아키텍쳐
 * 일단 웹/앱 서버는 동일한 서버에서 돌림 - 나중에 분리
 *
-
-## API 내용
+## API
+* 로그인 (POST /login)
+  - curl http://127.0.0.1:3000/login -X POST -d "email=rangken@gmail.com&password=[filter]"
+## API 공통
 * Content-Type 으로 모바일 웹 구분? User-Agent 로 해도 될듯?
   - curl URL -H "Content-Type: application/json"
 * Token 인증 x-pack-username, x-pack-token 헤더로 인증함

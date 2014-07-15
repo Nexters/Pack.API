@@ -69,7 +69,7 @@
     "grunt-nodemon": "0.2.1",
     "load-grunt-tasks": "^0.4.0",
     "lodash": "^2.4.1",
-    "meanio": "~0.5.2",
+    "meanio": "https://github.com/rangken/mean-cli/tarball/master",
     "method-override": "^1.0.0",
     "mongoose": "^3.8.8",
     "morgan": "^1.0.0",

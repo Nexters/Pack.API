@@ -95,7 +95,7 @@ module.exports = function(app, passport, db) {
 
             var response = {
                 status: errorCode,
-                msg: config.error[location][errorCode]
+                msg: config.error[location][errorCode] || 'Unknown Error'
             };
             if(this.isMobile()){
                 this.jsonp(response);

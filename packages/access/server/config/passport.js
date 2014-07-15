@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
     LinkedinStrategy = require('passport-linkedin').Strategy,
     User = mongoose.model('User'),
     config = require('meanio').loadConfig();
-var common = require('../../../common');
+
 module.exports = function(passport) {
 
     // Serialize the user id to push into the session
@@ -41,7 +41,7 @@ module.exports = function(passport) {
                 }
 
                 if (!user) {
-                    return done(null, false, common.errorMsg('100','user null'));
+                    return done(null, false);
                 }
 
                 if (!user.verifyToken(token)) {
