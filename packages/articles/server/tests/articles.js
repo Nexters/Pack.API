@@ -33,7 +33,6 @@ describe('<Unit Test>', function() {
                     content: 'Article Content',
                     user: user
                 });
-
                 done();
             });
         });

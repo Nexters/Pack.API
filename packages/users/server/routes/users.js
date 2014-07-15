@@ -17,12 +17,21 @@ module.exports = function(MeanUser, app, auth, database, passport) {
             next();
         })(req,res,next);
     }
-
+    app.route('/ping')
+        .get(function(req,res){
+          res.send('sucesss');
+        });
     app.route('/users/:userId')
         .get(authenticate, users.show);
 
     app.route('/users')
         .get(users.all);
+
+    // Setting the local strategy route
+    app.route('/login')
+        .post(passport.authenticate('local', {
+
+        }), users.login);
 
     app.route('/logout')
         .get(users.signout);
@@ -47,17 +56,6 @@ module.exports = function(MeanUser, app, auth, database, passport) {
     app.route('/loggedin')
         .get(function(req, res) {
             res.send(req.isAuthenticated() ? req.user : '0');
-        });
-
-    // Setting the local strategy route
-    app.route('/login')
-        .post(passport.authenticate('local', {
-
-        }), function(req, res) {
-            res.send({
-                user: req.user,
-                redirect: (req.user.roles.indexOf('admin') !== -1) ? req.get('referer') : false
-            });
         });
 
     // Setting the facebook oauth routes

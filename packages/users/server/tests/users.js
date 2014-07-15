@@ -3,7 +3,7 @@
 var crypto = require('crypto');
 
 /**
- * Create a random hex string of specific length and 
+ * Create a random hex string of specific length and
  * @todo consider taking out to a common unit testing javascript helper
  * @return string
  */
@@ -89,7 +89,7 @@ describe('<Unit Test>', function() {
                     _user.roles.should.have.length(1);
                     _user.remove(function(err) {
                         done();
-                    });                    
+                    });
                 });
 
             });
@@ -106,7 +106,7 @@ describe('<Unit Test>', function() {
                     _user.remove(function(err) {
                         done();
                     });
-                    
+
                 });
             });
 
@@ -130,31 +130,26 @@ describe('<Unit Test>', function() {
             });
 
             it('should fail to save an existing user with the same values', function(done) {
-                
                 var _user1 = new User(user1);
-                _user1.save();
-
-                var _user2 = new User(user1);
-
-                return _user2.save(function(err) {
-                    should.exist(err);
-                    _user1.remove(function() {
-
-                        if (!err) {
-                            _user2.remove(function() {
-                                done();
-                            });
-                        }
-
-                        done();
-
+                _user1.save(function(){
+                    var _user2 = new User(user1);
+                    return _user2.save(function(err) {
+                        should.exist(err);
+                        _user1.remove(function() {
+                            if (!err) {
+                                _user2.remove(function() {
+                                    done();
+                                });
+                            }
+                            done();
+                        });
                     });
-
                 });
+
             });
 
             it('should show an error when try to save without name', function(done) {
-                
+
                 var _user = new User(user1);
                 _user.name = '';
 
@@ -165,7 +160,7 @@ describe('<Unit Test>', function() {
             });
 
             it('should show an error when try to save without username', function(done) {
-                
+
                 var _user = new User(user1);
                 _user.username = '';
 
@@ -176,7 +171,7 @@ describe('<Unit Test>', function() {
             });
 
             it('should show an error when try to save without password and provider set to local', function(done) {
-                
+
                 var _user = new User(user1);
                 _user.password = '';
                 _user.provider = 'local';
@@ -194,7 +189,7 @@ describe('<Unit Test>', function() {
                 _user.password = '';
                 _user.provider = 'twitter';
 
-                return _user.save(function(err) {                
+                return _user.save(function(err) {
                     _user.remove(function() {
                         should.not.exist(err);
                         _user.provider.should.equal('twitter');
@@ -207,7 +202,7 @@ describe('<Unit Test>', function() {
         });
 
         after(function(done) {
-            
+
             /** Clean up user objects
              * un-necessary as they are cleaned up in each test but kept here
              * for educational purposes
@@ -217,7 +212,7 @@ describe('<Unit Test>', function() {
              *
              *  _user1.remove();
              *  _user2.remove();
-             */ 
+             */
 
             done();
         });

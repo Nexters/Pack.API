@@ -16,6 +16,7 @@ var mean = require('meanio'),
     mongoStore = require('connect-mongo')(session),
     helpers = require('view-helpers'),
     flash = require('connect-flash'),
+    useragent = require('express-useragent'),
     config = mean.loadConfig();
 
 module.exports = function(app, passport, db) {
@@ -65,9 +66,10 @@ module.exports = function(app, passport, db) {
      * Add req,res base method either mobile/json or html/angluar response
      *
      */
+    app.use(useragent.express());
     app.use(function (req, res, next) {
         res.isMobile = function(){
-            return req.get('Content-Type') === 'application/json';
+            return req.useragent.isMobile;
         }
         /*
         *   response success
@@ -79,6 +81,10 @@ module.exports = function(app, passport, db) {
                 msg: 'no error',
                 data: data
             };
+            // 비밀번호 해쉬는 보내지 않는다.
+            if(data.hashed_password != null){
+                data.hashed_password = undefined;
+            }
             if(this.isMobile()){
                 this.jsonp(response);
             }else{
