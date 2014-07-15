@@ -2,6 +2,7 @@
 
 module.exports = {
     db: 'mongodb://54.199.171.240/mean-dev',
+    port: 3001,
     app: {
         name: 'MEAN - FullStack JS - Development'
     },

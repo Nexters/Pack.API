@@ -10,6 +10,47 @@ var mongoose = require('mongoose'),
     crypto = require('crypto'),
     templates = require('../template');
 
+/**
+ * Show an User
+ */
+exports.show = function(req, res) {
+    //res.jsonp(req.user);
+    res.success(req.profile || null);
+};
+/**
+ * List of Users
+ */
+exports.all = function(req, res) {
+    User.find().sort('-created').populate('').exec(function(err, users) {
+        if (err) {
+            return res.jsonp(500, {
+                error: 'Cannot list the users'
+            });
+        }
+        res.success(users);
+        //res.fail("0","error!!")
+    });
+};
+/**
+*
+*/
+exports.login = function(req, res){
+    if(res.isMobile()){
+        var user = req.user;
+        user.token = user.makeSalt();
+        user.save(function(err) {
+            if (err) {
+                return res.fail('10002');
+            }
+            res.success(user);
+        });
+    }else{
+        res.send({
+            user: req.user,
+            redirect: (req.user.roles.indexOf('admin') !== -1) ? req.get('referer') : false
+        });
+    }
+};
 
 /**
  * Auth callback
@@ -217,24 +258,4 @@ exports.forgotpassword = function(req, res, next) {
         }
     });
 };
-/**
- * Show an User
- */
-exports.show = function(req, res) {
-    //res.jsonp(req.user);
-    res.success(req.profile || null);
-};
-/**
- * List of Users
- */
-exports.all = function(req, res) {
-    User.find().sort('-created').populate('').exec(function(err, users) {
-        if (err) {
-            return res.jsonp(500, {
-                error: 'Cannot list the users'
-            });
-        }
-        res.success(users);
-        //res.fail("0","error!!")
-    });
-};
+

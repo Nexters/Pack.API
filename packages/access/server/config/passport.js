@@ -29,12 +29,14 @@ module.exports = function(passport) {
     });
     // User Token strategy
     passport.use(new TokenStrategy({
-            usernameHeader: 'x-pack-username',
+            usernameHeader: 'x-pack-email',
             tokenHeader:    'x-pack-token',
-            usernameField:  'pack-username',
+            usernameField:  'pack-email',
             tokenField:     'pack-token'
         },
         function (email, token, done) {
+            console.log(email);
+            console.log(token);
             User.findOne({email: email}, function (err, user) {
                 if (err) {
                     return done(err);

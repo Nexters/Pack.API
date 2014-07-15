@@ -99,7 +99,9 @@ module.exports = function(grunt) {
                     }
                 ]
             },
-            src: ['packages/**/server/tests/**/*.js']
+            src: ['packages/**/server/tests/**/*.js'],
+            user: ['packages/users/server/tests/**/users.js'],
+            user_api: ['packages/users/server/tests/**/users_api.js']
         },
         env: {
             test: {
