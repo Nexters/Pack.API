@@ -53,6 +53,7 @@ describe('<Unit Test>', function() {
         });
 
         describe('Method Save', function() {
+            /*
             it('should begin without the test user', function(done) {
                 User.find({ email: user1.email }, function(err, users) {
                     users.should.have.length(0);
@@ -64,6 +65,7 @@ describe('<Unit Test>', function() {
 
                 });
             });
+            */
 
             it('should be able to save without problems', function(done) {
 
@@ -203,16 +205,11 @@ describe('<Unit Test>', function() {
 
         after(function(done) {
 
-            /** Clean up user objects
-             * un-necessary as they are cleaned up in each test but kept here
-             * for educational purposes
-             *
-             *  var _user1 = new User(user1);
-             *  var _user2 = new User(user2);
-             *
-             *  _user1.remove();
-             *  _user2.remove();
-             */
+            var _user1 = new User(user1);
+            var _user2 = new User(user2);
+
+            _user1.remove();
+            _user2.remove();
 
             done();
         });
