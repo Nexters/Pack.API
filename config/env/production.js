@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    db: 'mongodb://54.199.171.240/mean-production',
+    db: 'mongodb://54.250.170.196/mean-production',
     port: 3001,
     app: {
         name: 'MEAN - A Modern Stack - Production'
