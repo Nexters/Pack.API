@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    db: 'mongodb://localhost/mean-prod',
+    db: 'mongodb://54.199.171.240/mean-production',
     port: 3001,
     app: {
         name: 'MEAN - A Modern Stack - Production'
@@ -38,6 +38,7 @@ module.exports = {
             user: 'EMAIL_ID',
             pass: 'PASSWORD'
         }
-    }
+    },
+    error: require('../errors.json')
 };
 
