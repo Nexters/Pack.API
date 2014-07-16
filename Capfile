@@ -28,6 +28,9 @@ end
 namespace :deploy do
   task :bower_install do
     run "mkdir -p #{previous_release}/bower_components ; cp -r #{previous_release}/bower_components #{release_path}" if previous_release
+    run "cd #{deploy_to}/current && bower install --allow-root"
+    run "cd #{deploy_to}/current && grunt cssmin"
+    run "cd #{deploy_to}/current && grunt uglify"
   end
 end
 

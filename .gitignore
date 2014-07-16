@@ -11,5 +11,6 @@ mean.iml
 test/coverage/
 modules/public/
 modules/views/
+/public
 /public/build/
 /nbproject/private/
