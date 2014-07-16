@@ -15,18 +15,18 @@ set :app_environment, "PORT=3001"
 
 namespace :node do
   task :start do
-    run "cd #{deploy_to}/current && PORT=3001 NODE_ENV=development forever --debug start server.js"
+    run "cd #{deploy_to}/current && forever start server.js"
   end
   task :restart do
-    run "cd #{deploy_to}/current && PORT=3001 forever restart server.js"
+    run "cd #{deploy_to}/current && forever restart server.js"
   end
   task :stop do
-    run "cd #{deploy_to}/current && PORT=3001 forever stop server.js"
+    run "cd #{deploy_to}/current && forever stop server.js"
   end
 end
 
-namespace :node do
-  task :install_packages do
-    run "cd #{fetch(:latest_release)} && npm install"
-  end
-end
+# namespace :node do
+#   task :install_packages do
+#     run "cd #{fetch(:latest_release)} && npm install --no-bin-links"
+#   end
+# end
