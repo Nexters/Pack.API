@@ -25,6 +25,11 @@ namespace :node do
   end
 end
 
+namespace :deploy do
+  task :create_symlink do
+    run "mkdir -p #{previous_release}/bower_components ; cp -r #{previous_release}/bower_components #{release_path}" if previous_release
+  end
+end
 # namespace :node do
 #   task :install_packages do
 #     run "cd #{fetch(:latest_release)} && npm install --no-bin-links"
