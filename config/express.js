@@ -66,6 +66,7 @@ module.exports = function(app, passport, db) {
      * Add req,res base method either mobile/json or html/angluar response
      *
      */
+    app.set('uploadDir', __dirname + '/../public');
     app.use(useragent.express());
     app.use(function (req, res, next) {
         res.isMobile = function(){
