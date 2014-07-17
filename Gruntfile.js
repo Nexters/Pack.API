@@ -2,7 +2,7 @@
 
 var paths = {
     js: ['*.js', 'test/**/*.js', '!test/coverage/**', '!bower_components/**', 'packages/**/*.js', '!packages/**/node_modules/**'],
-    html: ['packages/**/public/**/views/**', 'packages/**/server/views/**'],
+    html: ['!coverage', 'packages/**/public/**/views/**', 'packages/**/server/views/**'],
     css: ['!bower_components/**', 'packages/**/public/**/css/*.css']
 };
 
@@ -87,21 +87,32 @@ module.exports = function(grunt) {
             }
         },
         mochaTest: {
-            options: {
-                reporter: 'spec',
-                require: [
-                    'server.js',
-                    function() {
-                        // preload all models
-                        require('glob').sync('packages/**/server').forEach(function(file) {
-                            require('meanio/lib/util').walk(__dirname + '/' + file, 'model', null, require);
-                        });
-                    }
-                ]
+            test: {
+              options: {
+                  reporter: 'spec',
+                  require: [
+                      'coverage/blanket',
+                      'server.js',
+                      function() {
+                          // preload all models
+                          require('glob').sync('packages/**/server').forEach(function(file) {
+                              require('meanio/lib/util').walk(__dirname + '/' + file, 'model', null, require);
+                          });
+                      }
+                  ]
+              },
+              src: ['packages/**/server/tests/**/*.js'],
+              user: ['packages/users/server/tests/**/users.js'],
+              user_api: ['packages/users/server/tests/**/users_api.js'],
             },
-            src: ['packages/**/server/tests/**/*.js'],
-            user: ['packages/users/server/tests/**/users.js'],
-            user_api: ['packages/users/server/tests/**/users_api.js']
+            coverage: {
+              options: {
+                reporter: 'html-cov',
+                quiet: true,
+                captureFile: 'coverage.html'
+              },
+              src: ['packages/**/server/tests/**/*.js']
+            }
         },
         env: {
             test: {
@@ -126,8 +137,8 @@ module.exports = function(grunt) {
     }
 
     //Test task.
-    grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
-
+    //grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
+    grunt.registerTask('test', ['env:test', 'mochaTest']);
     // For Heroku users only.
     // Docs: https://github.com/linnovate/mean/wiki/Deploying-on-Heroku
     grunt.registerTask('heroku:production', ['cssmin', 'uglify']);

@@ -29,6 +29,7 @@ var user1, user2;
 /**
  * Test Suites
  */
+ /*
 describe('<Unit Test>', function() {
     describe('Model User:', function() {
 
@@ -53,7 +54,7 @@ describe('<Unit Test>', function() {
         });
 
         describe('Method Save', function() {
-            /*
+
             it('should begin without the test user', function(done) {
                 User.find({ email: user1.email }, function(err, users) {
                     users.should.have.length(0);
@@ -65,7 +66,7 @@ describe('<Unit Test>', function() {
 
                 });
             });
-            */
+
 
             it('should be able to save without problems', function(done) {
 
@@ -215,3 +216,4 @@ describe('<Unit Test>', function() {
         });
     });
 });
+*/
