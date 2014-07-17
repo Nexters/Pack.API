@@ -18,13 +18,13 @@ Articles.register(function(app, auth, database) {
 
     //We are adding a link to the main menu for all authenticated users
     Articles.menus.add({
-        'roles': ['authenticated'],
+        'roles': ['admin'],
         'title': 'Articles',
         'link': 'all articles',
         'menu': 'articles'
     });
     Articles.menus.add({
-        'roles': ['authenticated'],
+        'roles': ['admin'],
         'title': 'Create New Article',
         'link': 'create article',
         'menu': 'articles'
