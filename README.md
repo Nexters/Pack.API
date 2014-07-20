@@ -1,7 +1,8 @@
 # Pack.API
 ## 모델링
 * [Model](./wiki/Modeling)
-* [Routing](./wiki/Routing)
+* [API](./wiki/API)
+
 ## 관리툴
 * 몽고디비 어드민 맥용 - [Robomongo](http://robomongo.org )
 
