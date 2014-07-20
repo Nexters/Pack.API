@@ -162,3 +162,5 @@ UserSchema.methods = {
 };
 
 mongoose.model('User', UserSchema);
+
+module.exports = UserSchema;
