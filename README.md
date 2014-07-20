@@ -1,7 +1,7 @@
 # Pack.API
 ## 모델링
-* [Model](./wiki/Data-Model)
-
+* [Model](./wiki/Modeling)
+* [Routing](./wiki/Routing)
 ## 관리툴
 * 몽고디비 어드민 맥용 - [Robomongo](http://robomongo.org )
 
@@ -63,7 +63,7 @@
 - 테스트
 	- *Should* : [https://github.com/visionmedia/should.js](https://github.com/visionmedia/should.js/)
  	- *SupperTest* : [https://github.com/visionmedia/supertest](https://github.com/visionmedia/supertest)
- 	
+
 - 배포
 	- *capistrano* : [https://github.com/capistrano/capistrano](https://github.com/capistrano/capistrano)
 	- *capistrano-node-deploy* : [https://github.com/loopj/capistrano-node-deploy](https://github.com/loopj/capistrano-node-deploy)

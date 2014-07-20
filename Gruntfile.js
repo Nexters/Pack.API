@@ -87,24 +87,23 @@ module.exports = function(grunt) {
             }
         },
         mochaTest: {
-            test: {
-              options: {
-                  reporter: 'spec',
-                  require: [
-                      'coverage/blanket',
-                      'server.js',
-                      function() {
-                          // preload all models
-                          require('glob').sync('packages/**/server').forEach(function(file) {
-                              require('meanio/lib/util').walk(__dirname + '/' + file, 'model', null, require);
-                          });
-                      }
-                  ]
-              },
-              src: ['packages/**/server/tests/**/*.js'],
-              user: ['packages/users/server/tests/**/users.js'],
-              user_api: ['packages/users/server/tests/**/users_api.js'],
+            options: {
+                reporter: 'spec',
+                require: [
+                    'coverage/blanket',
+                    'server.js',
+                    function() {
+                        // preload all models
+                        require('glob').sync('packages/**/server').forEach(function(file) {
+                            require('meanio/lib/util').walk(__dirname + '/' + file, 'model', null, require);
+                        });
+                    }
+                ]
             },
+            src: ['packages/**/server/tests/**/*.js'],
+            user: ['packages/users/server/tests/**/users.js'],
+            user_api: ['packages/users/server/tests/**/users_api.js'],
+            station: ['packages/stations/server/tests/**/stations.js'],
             coverage: {
               options: {
                 reporter: 'html-cov',
