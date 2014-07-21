@@ -30,20 +30,19 @@ function createDocRecurse (err) {
         Station.findOne({
             name: key
         }, function(err,station){
-          if(err){
+          if(err || station == null){
             doc = new Station();
           }else{
             doc = station;
           }
           line.split(',').forEach(function (entry, i) {
             if(schemaKeyList[i] === 'loc'){
-              entry = {
-                lat: Number(entry.split('..')[0]),
-                lng: Number(entry.split('..')[1])
-              };
+              entry = [ Number(entry.split('..')[0]), Number(entry.split('..')[1]) ];
             }
+            console.log(schemaKeyList[i]);
+            console.log(entry);
+            console.log(doc);
             doc[schemaKeyList[i]] = entry;
-
           });
           console.log(doc.toJSON());
           doc.save(createDocRecurse);

@@ -104,6 +104,7 @@ module.exports = function(grunt) {
             user: ['packages/users/server/tests/**/users.js'],
             user_api: ['packages/users/server/tests/**/users_api.js'],
             station: ['packages/stations/server/tests/**/stations.js'],
+            station_api: ['packages/stations/server/tests/**/stations_api.js'],
             coverage: {
               options: {
                 reporter: 'html-cov',

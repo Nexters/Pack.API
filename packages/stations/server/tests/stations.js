@@ -9,7 +9,7 @@ var should = require('should'),
 
 var station;
 
-describe('<Rotuing Test>', function() {
+describe('<Model Test>', function() {
   var url = 'http://localhost:3001';
   before(function(done) {
       station = {

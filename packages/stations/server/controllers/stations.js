@@ -7,16 +7,25 @@ var mongoose = require('mongoose'),
     Station = mongoose.model('Station');
 
 /**
+ * Show an Near Station
+ */
+exports.near = function(req ,res) {
+  var q = Station.findOne({ 'loc': { $near: [ req.query.lat, req.query.lng] }});
+  q.exec(function(err, station){
+    if(err){
+      return res.fail('20002');
+    }
+    res.success(station);
+  });
+};
+/**
  * Show an Station
  */
 exports.show = function(req, res) {
   res.success(req.station || null);
 };
 
-exports.near = function(req ,res) {
-  console.log(req.query.lat);
-  res.success('wow');
-};
+
 
 exports.create = function(req, res, next) {
   var station = new Station(req.body);
