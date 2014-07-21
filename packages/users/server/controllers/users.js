@@ -105,9 +105,11 @@ exports.create = function(req, res, next) {
     }
 
     // Hard coded for now. Will address this with the user permissions system in v0.3.5
+    user.token = user.makeSalt();
     user.roles = ['authenticated'];
     user.save(function(err) {
         if (err) {
+            console.log(err.code);
             switch (err.code) {
                 case 11000:
                     res.status(400).send([{

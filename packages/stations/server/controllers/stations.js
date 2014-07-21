@@ -13,6 +13,23 @@ exports.show = function(req, res) {
   res.success(req.station || null);
 };
 
+exports.near = function(req ,res) {
+  console.log(req.query.lat);
+  res.success('wow');
+};
+
+exports.create = function(req, res, next) {
+  var station = new Station(req.body);
+
+  station.save(function(err) {
+    if (err) {
+      return res.fail('20001');
+    }
+    res.success(station);
+  });
+};
+
+
 /**
  * Find user by id
  */
@@ -27,15 +44,4 @@ exports.station = function(req, res, next, id) {
         req.station = station;
         next();
     });
-};
-
-exports.create = function(req, res, next) {
-  var station = new Station(req.body);
-
-  station.save(function(err) {
-    if (err) {
-      return res.fail('20001');
-    }
-    res.success(station);
-  });
 };

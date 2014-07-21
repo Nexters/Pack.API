@@ -57,7 +57,7 @@ module.exports = function(app, passport, db) {
     app.use(expressValidator());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
-        extended: true
+      extended: true
     }));
     app.use(methodOverride());
 
@@ -69,48 +69,52 @@ module.exports = function(app, passport, db) {
     app.set('uploadDir', __dirname + '/../public');
     app.use(useragent.express());
     app.use(function (req, res, next) {
-        res.isMobile = function(){
-            return req.useragent.isMobile;
+      res.isMobile = function(){
+        // 테스트를 위해 Curl 은 무조건 모바일로 판단!
+        return req.useragent.isMobile || req.useragent.Platform == 'Curl';
+      }
+      /*
+      *   response success
+      *   @param {String} data : response object
+      */
+      res.success = function(data){
+        var response = {
+            status: '0',
+            msg: 'no error',
+            data: data
+        };
+        // 비밀번호 해쉬는 보내지 않는다.
+        // 유저 모델쪽에서 처리할 예정
+        /*
+        if(data.hashed_password != null){
+            data.hashed_password = undefined;
         }
-        /*
-        *   response success
-        *   @param {String} data : response object
         */
-        res.success = function(data){
-            var response = {
-                status: '0',
-                msg: 'no error',
-                data: data
-            };
-            // 비밀번호 해쉬는 보내지 않는다.
-            if(data.hashed_password != null){
-                data.hashed_password = undefined;
-            }
-            if(this.isMobile()){
-                this.jsonp(response);
-            }else{
-                this.jsonp(data);
-            }
-        };
-        /*
-        *   response fail
-        *   @param {String} errorCode : error Code number
-        *   @param {String} errorMsg : error Message for client Alert text
-        */
-        res.fail = function(errorCode){
-            var location = req.query.local || 'ko'
+        if(this.isMobile()){
+            this.jsonp(response);
+        }else{
+            this.jsonp(data);
+        }
+      };
+      /*
+      *   response fail
+      *   @param {String} errorCode : error Code number
+      *   @param {String} errorMsg : error Message for client Alert text
+      */
+      res.fail = function(errorCode){
+          var location = req.query.local || 'ko'
 
-            var response = {
-                status: errorCode,
-                msg: config.error[location][errorCode] || 'Unknown Error'
-            };
-            if(this.isMobile()){
-                this.jsonp(response);
-            }else{
-                this.jsonp(response);
-            }
-        };
-        next();
+          var response = {
+              status: errorCode,
+              msg: config.error[location][errorCode] || 'Unknown Error'
+          };
+          if(this.isMobile()){
+              this.jsonp(response);
+          }else{
+              this.jsonp(response);
+          }
+      };
+      next();
     });
     // Import the assets file and add to locals
     var assets = assetmanager.process({

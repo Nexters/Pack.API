@@ -6,7 +6,12 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-
+var validateUniqueName = function(value, callback) {
+    var Station = mongoose.model('Station');
+    Station.find({$and: [{name : value}, { _id: { $ne : this._id }}]}, function(err, user) {
+        callback(err || user.length === 0);
+    });
+};
 /**
  * Station Schema
  */
@@ -18,7 +23,8 @@ var StationSchema = new Schema({
     name: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        validate: [validateUniqueName, 'Station name is already in-use']
     },
     type: { type: String, enum: ['Airport', 'Bus', 'Train']},
     loc: { type: {
@@ -45,7 +51,9 @@ StationSchema.path('name').validate(function(name) {
 StationSchema.statics.load = function(id, cb) {
     this.findOne({
         _id: id
-    }).populate('user', 'name username').exec(cb);
+    }).populate('station', 'name username').exec(cb);
 };
 
 mongoose.model('Station', StationSchema);
+
+module.exports = StationSchema;

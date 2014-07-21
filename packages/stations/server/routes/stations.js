@@ -3,6 +3,8 @@ var stations = require('../controllers/stations');
 
 // The Package is past automatically as first parameter
 module.exports = function(Stations, app, auth, database) {
+    app.route('/stations/near')
+        .get(stations.near);
     app.route('/stations/:stationId')
         .get(stations.show);
     app.route('/stations/create')
