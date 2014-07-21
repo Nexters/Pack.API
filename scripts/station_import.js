@@ -39,9 +39,6 @@ function createDocRecurse (err) {
             if(schemaKeyList[i] === 'loc'){
               entry = [ Number(entry.split('..')[0]), Number(entry.split('..')[1]) ];
             }
-            console.log(schemaKeyList[i]);
-            console.log(entry);
-            console.log(doc);
             doc[schemaKeyList[i]] = entry;
           });
           console.log(doc.toJSON());

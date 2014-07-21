@@ -5,11 +5,15 @@ var stations = require('../controllers/stations');
 module.exports = function(Stations, app, auth, database) {
     app.route('/stations/near')
         .get(stations.near);
+    app.route('/stations/:stationId/create')
+        .post(stations.comment_create);
+    app.route('/stations/:stationId/comments')
+        .get(stations.comments);
     app.route('/stations/:stationId')
         .get(stations.show);
     app.route('/stations/create')
         .post(stations.create);
-    app.param('userId', stations.station);
+    app.param('stationId', stations.station);
     /*
     app.get('/stations/example/anyone', function(req, res, next) {
         res.send('Anyone can access this');

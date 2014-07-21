@@ -18,6 +18,22 @@ exports.near = function(req ,res) {
     res.success(station);
   });
 };
+
+exports.comment_create = function(req ,res) {
+  var station = req.station;
+  station.comments.push(req.body);
+  station.save(function(err){
+    if (err) {
+      return res.fail('20003');
+    }
+    res.success(station);
+  });
+};
+
+exports.comments = function(req ,res) {
+  var station = req.station;
+  res.success(station.comments);
+};
 /**
  * Show an Station
  */
@@ -40,13 +56,14 @@ exports.create = function(req, res, next) {
 
 
 /**
- * Find user by id
+ * Find Station by id
  */
 exports.station = function(req, res, next, id) {
   Station
     .findOne({
         _id: id
     })
+    .populate('comments.user')
     .exec(function(err, station) {
         if (err) return next(err);
         if (!station) return next(new Error('Failed to load Station ' + id));

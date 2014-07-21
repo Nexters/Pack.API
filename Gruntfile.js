@@ -1,7 +1,7 @@
 'use strict';
 
 var paths = {
-    js: ['*.js', 'test/**/*.js', '!test/coverage/**', '!bower_components/**', 'packages/**/*.js', '!packages/**/node_modules/**'],
+    js: ['*.js', 'test/**/*.js','!packages/**/server/tests/**', '!test/coverage/**', '!bower_components/**', 'packages/**/*.js', '!packages/**/**/tests/*.js','!packages/**/node_modules/**'],
     html: ['!coverage', 'packages/**/public/**/views/**', 'packages/**/server/views/**'],
     css: ['!bower_components/**', 'packages/**/public/**/css/*.css']
 };
@@ -90,14 +90,17 @@ module.exports = function(grunt) {
             options: {
                 reporter: 'spec',
                 require: [
-                    'coverage/blanket',
-                    'server.js',
+                    //'server.js',
+                    function() {
+                      require('./server.js');
+                    },
                     function() {
                         // preload all models
                         require('glob').sync('packages/**/server').forEach(function(file) {
                             require('meanio/lib/util').walk(__dirname + '/' + file, 'model', null, require);
                         });
-                    }
+                    },
+                    'coverage/blanket'
                 ]
             },
             src: ['packages/**/server/tests/**/*.js'],
