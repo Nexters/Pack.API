@@ -90,7 +90,7 @@ module.exports = function(grunt) {
             options: {
                 reporter: 'spec',
                 require: [
-                    //'server.js',
+                    'server.js',
                     function() {
                       require('./server.js');
                     },

@@ -36,6 +36,10 @@ module.exports = function(MeanUser, app, auth, database, passport) {
         .post(passport.authenticate('local', {
 
         }), users.login);
+    // Setting up the users api
+    app.route('/register')
+        .post(users.create);
+
     app.route('/upload')
         .post(function(req,res){
           var form = new formidable.IncomingForm();
@@ -53,10 +57,6 @@ module.exports = function(MeanUser, app, auth, database, passport) {
 
     app.route('/users/me')
         .get(users.me);
-
-    // Setting up the users api
-    app.route('/register')
-        .post(users.create);
 
 	  app.route('/forgot-password')
         .post(users.forgotpassword);
