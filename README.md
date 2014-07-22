@@ -3,28 +3,29 @@
 * [Model](https://github.com/Nexters/Pack.API/wiki/Modeling)
 * [API](https://github.com/Nexters/Pack.API/wiki/API)
 
-## 관리툴
-* 몽고디비 어드민 맥용 - [Robomongo](http://robomongo.org )
+## TODO
+### 7월 4주차
+#### 재영
+* - [x] Station near api
+* - [x] Station 모델링
+* - [x] Station show index API 작성
+* - [x] Mongoose Guide
+* - [ ] Mongoose API
+* - [ ] MongoDB
+* - [x] CSV 임포터
 
-## 아키텍쳐
-* 일단 웹/앱 서버는 동일한 서버에서 돌림 - 나중에 분리
-
+#### 문규
+* - [ ] Place 모델링
+* - [ ] Place API 작성
+* - [ ] Place Test 작성
 
 ## TEST
 ### Mocha 사용
   - grunt mochaTest
   - grunt mochaTest:src // 전부다
   - grunt mochaTest:user //유저관련
-
-## TODO
-* angular - [ ]
-* moongoose - [ ]
-* Cap - [x]
-* ~~Docker~~
-* Chef - [ ]
-* Code Coverage - [ ]
-* Mocha - [x]
-
+  
+  
 ## 배포
 ### 설치하기
 ===
@@ -39,7 +40,17 @@
 * cap node:stop
 * cap node:restart
 
+## 관리툴
+* 몽고디비 어드민 맥용 - [Robomongo](http://robomongo.org )
+
+
+
 ## 참고라이브러리
+- Node.js
+	- *Mongoose Guide* [http://mongoosejs.com/docs/guide.html](http://mongoosejs.com/docs/guide.html)
+	- *Mongoose API* [http://mongoosejs.com/docs/api.html](http://mongoosejs.com/docs/api.html)
+	- *Mongodb* [http://docs.mongodb.org/manual/core/crud-introduction/](http://docs.mongodb.org/manual/core/crud-introduction/)
+	
 - 테스트
 	- *Should* : [https://github.com/visionmedia/should.js](https://github.com/visionmedia/should.js/)
  	- *SupperTest* : [https://github.com/visionmedia/supertest](https://github.com/visionmedia/supertest)
