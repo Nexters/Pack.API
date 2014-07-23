@@ -36,12 +36,9 @@ exports.show = function(req, res) {
 exports.all = function(req, res) {
     User.find().sort('-created').populate('').exec(function(err, users) {
         if (err) {
-            return res.jsonp(500, {
-                error: 'Cannot list the users'
-            });
+            return res.fail('11000');
         }
         res.success(users);
-        //res.fail("0","error!!")
     });
 };
 /**
@@ -91,35 +88,13 @@ exports.create = function(req, res, next) {
         if (err) {
             switch (err.code) {
                 case 11000:
-                    res.status(400).send([{
-                        msg: 'Email already taken',
-                        param: 'email'
-                    }]);
-                    break;
-                case 11001:
-                    res.status(400).send([{
-                        msg: 'Username already taken',
-                        param: 'username'
-                    }]);
+                    res.fail('10003');
                     break;
                 default:
-                    var modelErrors = [];
-
-                    if (err.errors) {
-
-                        for (var x in err.errors) {
-                            modelErrors.push({
-                                param: x,
-                                msg: err.errors[x].message,
-                                value: err.errors[x].value
-                            });
-                        }
-
-                        res.status(400).send(modelErrors);
-                    }
+                    res.fail('19000');
+                    break;
             }
-
-            return res.status(400);
+            return res.fail('19000');
         }
         if(res.isMobile()){
           res.success(user);

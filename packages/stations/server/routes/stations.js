@@ -8,11 +8,12 @@ module.exports = function(Stations, app, auth, database) {
     app.route('/stations')
         .get(stations.all)
         .post(stations.create);
+    app.route('/stations/near')
+        .get(stations.near);
     app.route('/stations/:stationId')
         .get(stations.show)
         .put(stations.update);
-    
-    //Custom route
+
     app.route('/stations/near')
         .get(stations.near);
     app.route('/stations/:stationId/create')
@@ -20,7 +21,7 @@ module.exports = function(Stations, app, auth, database) {
     app.route('/stations/:stationId/comments')
         .get(stations.comments);
 
-    app.param('userId', stations.station);
+    app.param('stationId', stations.station);
 
     /*
     app.get('/stations/example/anyone', function(req, res, next) {
