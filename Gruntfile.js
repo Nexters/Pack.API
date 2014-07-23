@@ -1,7 +1,7 @@
 'use strict';
 
 var paths = {
-    js: ['*.js', 'test/**/*.js','!packages/**/server/tests/**', '!test/coverage/**', '!bower_components/**', 'packages/**/*.js', '!packages/**/**/tests/*.js','!packages/**/node_modules/**'],
+    js: ['*.js', 'test/**/*.js', '!test/coverage/**', '!bower_components/**', 'packages/**/*.js', '!packages/**/**/tests/*.js','!packages/**/node_modules/**'],
     html: ['!coverage', 'packages/**/public/**/views/**', 'packages/**/server/views/**'],
     css: ['!bower_components/**', 'packages/**/public/**/css/*.css']
 };
@@ -112,7 +112,7 @@ module.exports = function(grunt) {
               options: {
                 reporter: 'html-cov',
                 quiet: true,
-                captureFile: 'coverage.html'
+                captureFile: 'coverage/coverage.html'
               },
               src: ['packages/**/server/tests/**/*.js']
             }
