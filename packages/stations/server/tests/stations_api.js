@@ -5,9 +5,11 @@
 var should = require('should'),
     request = require('supertest'),
     mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    User = mongoose.model('User'),
     Station = mongoose.model('Station');
 
-var station;
+var station, user;
 
 describe('<Rotuing Test>', function() {
   var url = 'http://localhost:3001';
@@ -22,11 +24,15 @@ describe('<Rotuing Test>', function() {
       });
       station.save(function(err) {
         should.not.exist(err);
-        done();
+        User.findOne().exec(function(err, _user) {
+          user = _user;
+          done();
+        });
       });
   });
 
   describe('Model Station:', function() {
+    // 주변에 역에 대한 정보를 가져온다.
     it('get nearest station', function(done){
       var data = {
         lat: '35.5465',
@@ -47,14 +53,18 @@ describe('<Rotuing Test>', function() {
           done();
         });
     });
+    // 댓글을 생성한다. 인증필요!
     it('create comment', function(done){
       var data = {
         body: "Body",
+        user: user
       };
 
       request(url)
         .post('/stations/'+station._id+'/create')
         .set('User-Agent', user_agent)
+        .set('x-pack-email',user.email)
+        .set('x-pack-token',user.token)
         .send(data)
         .end(function(err, res){
           if(err){
@@ -66,11 +76,21 @@ describe('<Rotuing Test>', function() {
           r.should.have.property('status','0');
           // 댓글이 생성되고 내용은 입력한 내용 그대로여야 한다.
           r.data.comments[0].should.have.property('body',data.body);
+
+          //r.data.comments[0].user.should.have.property('_id',String(user._id));
+          // 댓글을 생성한 유저가 data 로입력한 유저와 같아야 한다.
+          r.data.comments[0].user.should.have.properties({
+            _id: String(user._id),
+            email: user.email,
+            token: user.token
+          });
+
           // http code 는 200
           res.should.have.status(200);
           done();
         });
     });
+    // 댓글이 성공적으로 생성되야 통과할수 있는 테스트 이다.
     it('list comments', function(done){
       request(url)
         .get('/stations/'+station._id+'/comments')
@@ -81,6 +101,7 @@ describe('<Rotuing Test>', function() {
           }
           should.not.exist(err);
           var r = eval('('+res.text+')');
+          console.log(r);
           // 상태코드 0 이여야 한다.
           r.should.have.property('status','0');
           // data 는 comments 에 대한 array

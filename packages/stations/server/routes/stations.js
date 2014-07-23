@@ -1,12 +1,13 @@
 'use strict';
-var stations = require('../controllers/stations');
+var stations = require('../controllers/stations'),
+    users = require('../../../users/server/controllers/users');
 
 // The Package is past automatically as first parameter
 module.exports = function(Stations, app, auth, database) {
     app.route('/stations/near')
         .get(stations.near);
     app.route('/stations/:stationId/create')
-        .post(stations.comment_create);
+        .post(users.authenticate_token, stations.comment_create);
     app.route('/stations/:stationId/comments')
         .get(stations.comments);
     app.route('/stations/:stationId')

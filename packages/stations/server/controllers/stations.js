@@ -63,7 +63,7 @@ exports.station = function(req, res, next, id) {
     .findOne({
         _id: id
     })
-    .populate('comments.user')
+    .populate('comments.user') // 반드시 ref 를 가져오려면 populate 를 해주어야 한다. (join 개념!)
     .exec(function(err, station) {
         if (err) return next(err);
         if (!station) return next(new Error('Failed to load Station ' + id));

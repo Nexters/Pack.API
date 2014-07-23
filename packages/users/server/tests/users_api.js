@@ -86,7 +86,6 @@ describe('<Rotuing Test>', function() {
 
     it('upload test', function(done){
       var file1Path = __dirname + '/test_files/test.png';
-      console.log('file1Path : ' + file1Path);
       request(url)
         .post('/upload')
         .attach('file1', file1Path)

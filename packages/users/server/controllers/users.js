@@ -8,8 +8,21 @@ var mongoose = require('mongoose'),
     async = require('async'),
     config = require('meanio').loadConfig(),
     crypto = require('crypto'),
+    passport = require('passport'),
     templates = require('../template');
 
+exports.authenticate_token = function(req, res, next) {
+    passport.authenticate('token', function (err, user, info) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            res.fail('10001');
+        }
+        req.user = user;
+        next();
+    })(req,res,next);
+};
 /**
  * Show an User
  */
@@ -76,7 +89,6 @@ exports.create = function(req, res, next) {
     user.roles = ['authenticated'];
     user.save(function(err) {
         if (err) {
-            console.log(err.code);
             switch (err.code) {
                 case 11000:
                     res.status(400).send([{
