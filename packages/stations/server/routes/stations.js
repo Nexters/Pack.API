@@ -1,5 +1,6 @@
 'use strict';
-var stations = require('../controllers/stations');
+var stations = require('../controllers/stations'),
+    users = require('../../../users/server/controllers/users');
 
 // The Package is past automatically as first parameter
 module.exports = function(Stations, app, auth, database) {
@@ -10,12 +11,17 @@ module.exports = function(Stations, app, auth, database) {
     app.route('/stations/:stationId')
         .get(stations.show)
         .put(stations.update);
-    app.param('userId', stations.station);
-
+    
     //Custom route
     app.route('/stations/near')
         .get(stations.near);
-        
+    app.route('/stations/:stationId/create')
+        .post(users.authenticate_token, stations.comment_create);
+    app.route('/stations/:stationId/comments')
+        .get(stations.comments);
+
+    app.param('userId', stations.station);
+
     /*
     app.get('/stations/example/anyone', function(req, res, next) {
         res.send('Anyone can access this');

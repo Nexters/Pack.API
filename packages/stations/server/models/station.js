@@ -27,13 +27,17 @@ var StationSchema = new Schema({
         validate: [validateUniqueName, 'Station name is already in-use']
     },
     type: { type: String, enum: ['Airport', 'Bus', 'Train']},
-    loc: { type: {
-      lat: Number,
-      lng: Number
-    }, index: '2d'},
+    loc: { type: [Number], index: '2d'},
     address: String,
     hidden: Boolean,
-    comments: [{ body: String, date: Date }],
+    comments: [{
+      body: String,
+      date:{
+        type: Date,
+        default: Date.now
+      },
+      user:{ type: Schema.ObjectId, ref: 'User'}
+    }],
     near_stations: [Schema.Types.ObjectId]
 });
 
@@ -52,6 +56,12 @@ StationSchema.statics.load = function(id, cb) {
     this.findOne({
         _id: id
     }).populate('station', 'name username').exec(cb);
+};
+/**
+ * Methods
+ */
+StationSchema.methods = {
+
 };
 
 mongoose.model('Station', StationSchema);

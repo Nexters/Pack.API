@@ -1,7 +1,7 @@
 'use strict';
 
 var paths = {
-    js: ['*.js', 'test/**/*.js', '!test/coverage/**', '!bower_components/**', 'packages/**/*.js', '!packages/**/node_modules/**'],
+    js: ['*.js', 'test/**/*.js', '!test/coverage/**', '!bower_components/**', 'packages/**/*.js', '!packages/**/**/tests/*.js','!packages/**/node_modules/**'],
     html: ['!coverage', 'packages/**/public/**/views/**', 'packages/**/server/views/**'],
     css: ['!bower_components/**', 'packages/**/public/**/css/*.css']
 };
@@ -90,25 +90,29 @@ module.exports = function(grunt) {
             options: {
                 reporter: 'spec',
                 require: [
-                    'coverage/blanket',
                     'server.js',
+                    function() {
+                      require('./server.js');
+                    },
                     function() {
                         // preload all models
                         require('glob').sync('packages/**/server').forEach(function(file) {
                             require('meanio/lib/util').walk(__dirname + '/' + file, 'model', null, require);
                         });
-                    }
+                    },
+                    'coverage/blanket'
                 ]
             },
             src: ['packages/**/server/tests/**/*.js'],
             user: ['packages/users/server/tests/**/users.js'],
             user_api: ['packages/users/server/tests/**/users_api.js'],
             station: ['packages/stations/server/tests/**/stations.js'],
+            station_api: ['packages/stations/server/tests/**/stations_api.js'],
             coverage: {
               options: {
                 reporter: 'html-cov',
                 quiet: true,
-                captureFile: 'coverage.html'
+                captureFile: 'coverage/coverage.html'
               },
               src: ['packages/**/server/tests/**/*.js']
             }

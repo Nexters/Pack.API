@@ -9,33 +9,36 @@ var should = require('should'),
 
 var station;
 
-describe('<Rotuing Test>', function() {
-  var url = 'http://localhost:3001';
-  before(function(done) {
-      station = {
-        name: '도쿄국제공항',
-        type: 'Airport',
-        loc: { lat: 35.549393, lng: 139.779839},
-        address: '3-3-2 Hanedakuko, Ota, Tokyo 144-0041 일본',
-        hidden: false,
-        comments: []
-      };
-      done();
+describe('<Model Test>', function() {
+  before(function(done){
+    done();
   });
-  describe('Model Station:', function() {
+  beforeEach(function(done) {
+    station = new Station({
+      name: '테스트 역',
+      type: 'Airport',
+      loc: [35.549393, 139.779839],
+      address: '3-3-2 Hanedakuko, Ota, Tokyo 144-0041 일본 222',
+      hidden: false
+    });
+    done();
+  });
+  describe('<Model Station:>', function() {
     it('Save station', function(done){
-      var _station = new Station(station);
-      _station.save(function(err) {
-          should.not.exist(err);
-          _station.remove();
-          done();
+      station.save(function(err) {
+        should.not.exist(err);
+        done();
       });
     });
     it('should update to request arguments', function() {
       
     });
   });
-  after(function(done) {
-      done();
+  after(function(done){
+    done();
+  });
+  afterEach(function(done) {
+    station.remove();
+    done();
   });
 });

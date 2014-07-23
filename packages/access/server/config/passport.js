@@ -35,8 +35,6 @@ module.exports = function(passport) {
             tokenField:     'pack-token'
         },
         function (email, token, done) {
-            console.log(email);
-            console.log(token);
             User.findOne({email: email}, function (err, user) {
                 if (err) {
                     return done(err);

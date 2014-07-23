@@ -7,3 +7,4 @@ var mean = require('meanio');
 mean.serve({ /*options placeholder*/ }, function(app, config) {
     console.log('Mean app started on port ' + config.port + ' (' + process.env.NODE_ENV + ')');
 });
+

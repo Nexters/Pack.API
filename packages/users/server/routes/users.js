@@ -9,24 +9,13 @@ var formidable = require('formidable'),
 
 module.exports = function(MeanUser, app, auth, database, passport) {
 
-    function authenticate(req, res, next) {
-        passport.authenticate('token', function (err, user, info) {
-            if (err) {
-                return next(err);
-            }
-            if (!user) {
-                res.fail('10001');
-            }
-            req.user = user;
-            next();
-        })(req,res,next);
-    }
     app.route('/ping')
         .get(function(req,res){
           res.send('sucesss');
         });
+
     app.route('/users/:userId')
-        .get(authenticate, users.show);
+        .get(users.authenticate_token, users.show);
 
     app.route('/users')
         .get(users.all);
@@ -36,6 +25,10 @@ module.exports = function(MeanUser, app, auth, database, passport) {
         .post(passport.authenticate('local', {
 
         }), users.login);
+    // Setting up the users api
+    app.route('/register')
+        .post(users.create);
+
     app.route('/upload')
         .post(function(req,res){
           var form = new formidable.IncomingForm();
@@ -48,15 +41,13 @@ module.exports = function(MeanUser, app, auth, database, passport) {
             res.send('upload complete');
           });
         });
+
+    // -----
     app.route('/logout')
         .get(users.signout);
 
     app.route('/users/me')
         .get(users.me);
-
-    // Setting up the users api
-    app.route('/register')
-        .post(users.create);
 
 	  app.route('/forgot-password')
         .post(users.forgotpassword);

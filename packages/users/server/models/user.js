@@ -28,8 +28,7 @@ var validateUniqueEmail = function(value, callback) {
 
 var UserSchema = new Schema({
     name: {
-        type: String,
-        required: true
+        type: String
     },
     email: {
         type: String,
@@ -39,9 +38,7 @@ var UserSchema = new Schema({
         validate: [validateUniqueEmail, 'E-mail address is already in-use']
     },
     username: {
-        type: String,
-        unique: true,
-        required: true
+        type: String
     },
     roles: {
         type: Array,
@@ -68,6 +65,15 @@ var UserSchema = new Schema({
     google: {},
     linkedin: {}
 });
+/**
+ * Validations
+ */
+UserSchema.path('token').validate(function(token) {
+    return !!token;
+}, 'Token cannot be blank');
+UserSchema.path('email').validate(function(email) {
+    return !!email;
+}, 'Email cannot be blank');
 
 /**
  * Virtuals
