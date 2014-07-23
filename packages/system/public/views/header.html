@@ -14,6 +14,30 @@
     <ul class="navbar-nav nav">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Place <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li data-ng-repeat="item in menus.places" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+                  <a mean-token="item.link" ui-sref='{{item.link}}'>{{item.title}}</a>
+              </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="navbar-nav nav">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Station <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li data-ng-repeat="item in menus.stations" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+                  <a mean-token="item.link" ui-sref='{{item.link}}'>{{item.title}}</a>
+              </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="navbar-nav nav">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 Article <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">

@@ -6,3 +6,4 @@ exports.errorMsg = function(errorCode,errorMsg){
     msg: errorMsg
   };
 };
+

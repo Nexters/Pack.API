@@ -1,26 +1,22 @@
-<div class="" data-ng-controller="StationsController">
-	<h1>Example view from your new awesome package</h1>
-	<h2>Package: {{package.name}}</h2>
-	<ol>
-		<li>
-			<a href="stations/example/anyone">Server route that anyone can access</a>
-		</li>
-		<li>
-			<a href="stations/example/auth">Server route that requires authentication</a>
-		</li>
-		<li>
-			<a href="stations/example/admin">Server route that requires admin user</a>
-		</li>
-		<li>
-			<a href="stations/example/render">Raw Html rendering example from using swig</a>
-		</li>
-	</ol>
-	<h3><img src="/stations/assets/img/logo.png" /></h3>
-	</br>
-	<p class="alert alert-info">You can find your package in /packages/stations</p>
-	</br>
-	<p class="alert alert-warning">MEAN versions prior to 0.3.2 will be in /node_modules/stations</p>
-	</br>
-	<h3><a href="http://www.mean.io/#!/docs">Documentation</a></h3>
-	</br>
-</div>
+<section data-ng-controller="StationsController" data-ng-init="find()">
+    <ul>
+        <li data-ng-repeat="station in stations">
+            <span>{{station.created | date:'medium'}}</span> 
+            <h2>
+                <a data-ng-href="#!/stations/{{station._id}}">{{station.name}}</a>
+                <span data-ng-if="hasAuthorization(station)">
+                    <a class="btn" href="/#!/stations/{{station._id}}/edit">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <a class="btn" data-ng-click="remove(station);">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </span>
+            </h2>
+            <div>{{station.lat}}</div>
+            <div>{{station.lng}}</div>
+            <div>{{station.address}}</div>
+        </li>
+    </ul>
+    <h1 data-ng-hide="!articles || articles.length">아직 역 정보가 입력되지 않았습니다. <br> 새로운 <a href="/#!/articles/create">역 정보</a>를 입력하시겠습니까?</h1>
+</section>

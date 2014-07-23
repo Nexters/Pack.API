@@ -1,0 +1,76 @@
+<section data-ng-controller="StationsController">
+  <form name="stationForm" class="form-horizontal col-md-6" role="form" data-ng-submit="create(stationForm.$valid)" novalidate>
+    <div class="form-group" ng-class="{ 'has error' : submitted && stationForm.name.$invalid}">
+      <label mean-token="'create-name'" class="col-md-3 control-label" >Name</label>
+      <div class="col-md-9">
+        <input name="name" type="text" class="form-control" data-ng-model="name" id="name" placeholder="Station 이름을 입력해주세요." required>
+        <div ng-show="submitted && stationForm.name.$invalid" class="help-block">
+          <p ng-show="stationForm.name.$error.required">이름을 입력해주세요.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error' : submitted && stationForm.type.$invalid}">
+      <label mean-token="'create-type'" class="col-md-3 control-label" >Type</label>
+      <div class="col-md-9">
+        <div class="radio-inline">
+        <label>
+        <input type="radio" name="type" id="type1" value="airplane" checked>
+          Airplane
+        </label>
+        </div>
+        <div class="radio-inline">
+        <label>
+        <input type="radio" name="type" id="type2" value="train">
+          Train
+        </label>
+        </div>
+        <div class="radio-inline">
+        <label>
+        <input type="radio" name="type" id="type3" value="bus">
+          Bus
+        </label>
+        </div>
+        <div ng-show="submitted && stationForm.type.$invalid" class="help-block">
+          <p ng-show="stationForm.type.$error.required">타입을 선택해주세요.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has error' : submitted && stationForm.loc.$invalid}">
+      <label mean-token="'create-location'" class="col-md-3 control-label" >lattitude</label>
+      <div class="col-md-9">
+        <input name="lat" type="text" class="form-control" data-ng-model="lat" id="lat" placeholder="location 위도를 입력해주세요." required>
+        <div ng-show="submitted && stationForm.lat.$invalid" class="help-block">
+          <p ng-show="stationForm.lat.$error.required">위도를 입력해주세요.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has error' : submitted && stationForm.loc.$invalid}">
+      <label mean-token="'create-location'" class="col-md-3 control-label" >longitude</label>
+      <div class="col-md-9">
+        <input name="lng" type="text" class="form-control" data-ng-model="lng" id="lng" placeholder="location의 경도 입력해주세요." required>
+        <div ng-show="submitted && stationForm.lng.$invalid" class="help-block">
+          <p ng-show="stationForm.lng.$error.required">경도를 입력해주세요.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has error' : submitted && stationForm.loc.$invalid}">
+      <label mean-token="'create-location'" class="col-md-3 control-label" >Address</label>
+      <div class="col-md-9">
+        <input name="address" type="text" class="form-control" data-ng-model="address" id="address" placeholder="주소를 입력해주세요." required>
+        <div ng-show="submitted && stationForm.address.$invalid" class="help-block">
+          <p ng-show="stationForm.address.$error.required">주소를 입력해주세요.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn btn-info">Submit</button>
+        </div>
+    </div>
+  </form>
+</section>

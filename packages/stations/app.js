@@ -17,13 +17,19 @@ Stations.register(function(app, auth, database) {
     Stations.routes(app, auth, database);
 
     //We are adding a link to the main menu for all authenticated users
-    // Stations.menus.add({
-    //     title: 'stations example page',
-    //     link: 'stations example page',
-    //     roles: ['authenticated'],
-    //     menu: 'main'
-    // });
-
+    Stations.menus.add({
+         title: '역 정보 리스트.',
+         link: 'all stations',
+         roles: ['admin'],
+         menu: 'stations'
+    });
+    Stations.menus.add({
+         title: '새로운 역 입력하기.',
+         link: 'new station',
+         roles: ['admin'],
+         menu: 'stations'
+    });
+    
     /**
     //Uncomment to use. Requires meanio@0.3.7 or above
     // Save settings with callback

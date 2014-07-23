@@ -3,13 +3,19 @@ var stations = require('../controllers/stations');
 
 // The Package is past automatically as first parameter
 module.exports = function(Stations, app, auth, database) {
+    //CRUD
+    app.route('/stations')
+        .get(stations.all)
+        .post(stations.create);
+    app.route('/stations/:stationId')
+        .get(stations.show)
+        .put(stations.update);
+    app.param('userId', stations.station);
+
+    //Custom route
     app.route('/stations/near')
         .get(stations.near);
-    app.route('/stations/:stationId')
-        .get(stations.show);
-    app.route('/stations/create')
-        .post(stations.create);
-    app.param('userId', stations.station);
+        
     /*
     app.get('/stations/example/anyone', function(req, res, next) {
         res.send('Anyone can access this');
