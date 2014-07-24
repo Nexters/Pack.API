@@ -29,6 +29,8 @@ module.exports = function(MeanUser, app, auth, database, passport) {
     app.route('/register')
         .post(users.create);
 
+    app.route('/auth/kakao')
+        .get(passport.authenticate('kakao'),users.check);
     // -----
     app.route('/logout')
         .get(users.signout);
@@ -111,4 +113,8 @@ module.exports = function(MeanUser, app, auth, database, passport) {
         .get(passport.authenticate('linkedin', {
             failureRedirect: '#!/login'
         }), users.authCallback);
+
+    app.get('/auth/kakao/callback', passport.authenticate('kakao', {
+        failureRedirect: '#!/login'
+    }), users.authCallback);
 };

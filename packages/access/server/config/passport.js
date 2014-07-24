@@ -3,6 +3,7 @@
 var mongoose = require('mongoose'),
     TokenStrategy = require('passport-token').Strategy,
     LocalStrategy = require('passport-local').Strategy,
+    KakaoStrategy = require('passport-kakao').Strategy,
     TwitterStrategy = require('passport-twitter').Strategy,
     FacebookStrategy = require('passport-facebook').Strategy,
     GitHubStrategy = require('passport-github').Strategy,
@@ -52,6 +53,7 @@ module.exports = function(passport) {
             });
         }
     ));
+
     // Use local strategy
     passport.use(new LocalStrategy({
             usernameField: 'email',
@@ -79,6 +81,40 @@ module.exports = function(passport) {
         }
     ));
 
+    passport.use(new KakaoStrategy({
+        clientID: config.kakao.clientID,
+        callbackURL: config.kakao.callbackURL
+      },
+      function(accessToken, refreshToken, profile, done){
+        User.findOne({
+            'kakao.id' : profile.id
+        }, function(err, user){
+            if(err){
+                return done(err);
+            }
+            if(!user){
+                user = new User({
+                    name: profile.username,
+                    username: profile.id,
+                    email: profile.id+'@kakao.com',
+                    token: profile.id,
+                    roles : ['authenticated'],
+                    provider: 'kakao',
+                    kakao: profile._json
+                });
+
+                user.save(function(err){
+                    if(err){
+                        console.log(err);
+                    }
+                    return done(err, user);
+                });
+            }else{
+                return done(err, user);
+            }
+          });
+      }
+    ));
     // Use twitter strategy
     passport.use(new TwitterStrategy({
             consumerKey: config.twitter.clientID,

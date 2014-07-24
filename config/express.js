@@ -56,13 +56,12 @@ module.exports = function(app, passport, db) {
     app.use(cookieParser());
 
     // Request body parsing middleware should be above methodOverride
-    app.use(expressValidator());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
       extended: true
     }));
     app.use(methodOverride());
-
+    app.use(expressValidator(['kakao']));
     /**
      * Author : RANGKEN
      * Add req,res base method either mobile/json or html/angluar response

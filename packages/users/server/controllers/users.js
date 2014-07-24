@@ -76,7 +76,7 @@ exports.create = function(req, res, next) {
     form.maxFieldsSize = 2 * 1024 * 1024;
 
     form.parse(req, function(err, fields, files) {
-
+      console.log(fields);
       var user = new User(fields);
       user.provider = 'local';
       /*
@@ -94,7 +94,9 @@ exports.create = function(req, res, next) {
       }
       */
       user.token = user.makeSalt();
-      user.image = path.join('users',path.basename(files.image.path));
+      if(!!files.image){
+        user.image = path.join('users',path.basename(files.image.path));
+      }
       user.roles = ['authenticated'];
       user.save(function(err) {
           if (err) {
@@ -114,51 +116,11 @@ exports.create = function(req, res, next) {
           }
       });
     });
-
-    /*
-    var user = new User(req.body);
-
-    user.provider = 'local';
-
-    // because we set our user.provider to local our models/user.js validation will always be true
-    //req.assert('name', 'You must enter a name').notEmpty();
-    req.assert('email', 'You must enter a valid email address').isEmail();
-    req.assert('password', 'Password must be between 8-20 characters long').len(8, 20);
-    //req.assert('username', 'Username cannot be more than 20 characters').len(1,20);
-    req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
-
-    var errors = req.validationErrors();
-    if (errors) {
-        res.fail('10010');
-    }
-    // Hard coded for now. Will address this with the user permissions system in v0.3.5
-    user.token = user.makeSalt();
-    user.roles = ['authenticated'];
-    user.save(function(err) {
-        if (err) {
-            switch (err.code) {
-                case 11000:
-                    res.fail('10003');
-                    break;
-                default:
-                    res.fail('19000');
-                    break;
-            }
-            return res.fail('19000');
-        }
-        if(res.isMobile()){
-          // 유저 이미지 업로드!
-          console.log(req);
-          res.success(user);
-        }else{
-          req.logIn(user, function(err) {
-            if (err) return next(err);
-            return res.redirect('/');
-          });
-        }
-    });
-*/
 };
+exports.check = function(req, res){
+  var user = req.user;
+};
+/**
 
 /**
  * Auth callback
