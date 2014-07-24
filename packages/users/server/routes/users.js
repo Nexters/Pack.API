@@ -29,19 +29,6 @@ module.exports = function(MeanUser, app, auth, database, passport) {
     app.route('/register')
         .post(users.create);
 
-    app.route('/upload')
-        .post(function(req,res){
-          var form = new formidable.IncomingForm();
-          form.uploadDir = app.get('uploadDir');
-          form.maxFieldsSize = 2 * 1024 * 1024;
-
-          form.parse(req, function(err, fields, files) {
-            //console.log(util.inspect(files));
-            //console.log(path.basename(files.file1.path));
-            res.send('upload complete');
-          });
-        });
-
     // -----
     app.route('/logout')
         .get(users.signout);

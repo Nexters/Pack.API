@@ -17,6 +17,8 @@ var mean = require('meanio'),
     helpers = require('view-helpers'),
     flash = require('connect-flash'),
     useragent = require('express-useragent'),
+    path = require('path'),
+    mkdirp = require('mkdirp'),
     config = mean.loadConfig();
 
 module.exports = function(app, passport, db) {
@@ -66,7 +68,14 @@ module.exports = function(app, passport, db) {
      * Add req,res base method either mobile/json or html/angluar response
      *
      */
-    app.set('uploadDir', __dirname + '/../public');
+     /* 업로드 디렉토리 생성 */
+    var uploadDir = path.join(__dirname, '../public');
+    (function(directories){
+      for(var i in directories){
+        mkdirp(path.join(uploadDir, directories[i]));
+      }
+    }(['users','stations','places']));
+    app.set('uploadDir', uploadDir);
     app.use(useragent.express());
     app.use(function (req, res, next) {
       res.isMobile = function(){

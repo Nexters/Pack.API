@@ -14,3 +14,4 @@ modules/views/
 /public
 /public/build/
 /nbproject/private/
+coverage.html

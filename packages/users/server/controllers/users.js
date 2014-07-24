@@ -9,6 +9,10 @@ var mongoose = require('mongoose'),
     config = require('meanio').loadConfig(),
     crypto = require('crypto'),
     passport = require('passport'),
+    formidable = require('formidable'),
+    util = require('util'),
+    path = require('path'),
+    mean = require('meanio'),
     templates = require('../template');
 
 exports.authenticate_token = function(req, res, next) {
@@ -65,6 +69,53 @@ exports.login = function(req, res){
  * Create user
  */
 exports.create = function(req, res, next) {
+    var form = new formidable.IncomingForm({
+      keepExtensions: true
+    });
+    form.uploadDir = path.join(mean.app.get('uploadDir'),'users');
+    form.maxFieldsSize = 2 * 1024 * 1024;
+
+    form.parse(req, function(err, fields, files) {
+
+      var user = new User(fields);
+      user.provider = 'local';
+
+      /*
+      // because we set our user.provider to local our models/user.js validation will always be true
+      //req.assert('name', 'You must enter a name').notEmpty();
+      user.assert('email', 'You must enter a valid email address').isEmail();
+      user.assert('password', 'Password must be between 8-20 characters long').len(8, 20);
+      //req.assert('username', 'Username cannot be more than 20 characters').len(1,20);
+      user.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
+
+      var errors = req.validationErrors();
+      if (errors) {
+        console.log(errors);
+        res.fail('10010');
+      }
+      */
+      user.token = user.makeSalt();
+      user.roles = ['authenticated'];
+      user.save(function(err) {
+          if (err) {
+              if(err.code === 11000){
+                return res.fail('10003');
+              }
+              return res.fail('19000');
+          }
+          if(res.isMobile()){
+            // 유저 이미지 업로드!
+            res.success(user);
+          }else{
+            req.logIn(user, function(err) {
+              if (err) return next(err);
+              return res.redirect('/');
+            });
+          }
+      });
+    });
+
+    /*
     var user = new User(req.body);
 
     user.provider = 'local';
@@ -78,9 +129,8 @@ exports.create = function(req, res, next) {
 
     var errors = req.validationErrors();
     if (errors) {
-        return res.status(400).send(errors);
+        res.fail('10010');
     }
-
     // Hard coded for now. Will address this with the user permissions system in v0.3.5
     user.token = user.makeSalt();
     user.roles = ['authenticated'];
@@ -97,6 +147,8 @@ exports.create = function(req, res, next) {
             return res.fail('19000');
         }
         if(res.isMobile()){
+          // 유저 이미지 업로드!
+          console.log(req);
           res.success(user);
         }else{
           req.logIn(user, function(err) {
@@ -105,6 +157,7 @@ exports.create = function(req, res, next) {
           });
         }
     });
+*/
 };
 
 /**
@@ -150,17 +203,16 @@ exports.me = function(req, res) {
  * Find user by id
  */
 exports.user = function(req, res, next, id) {
-
     User
-        .findOne({
-            _id: id
-        })
-        .exec(function(err, user) {
-            if (err) return next(err);
-            if (!user) return next(new Error('Failed to load User ' + id));
-            req.profile = user;
-            next();
-        });
+      .findOne({
+          _id: id
+      })
+      .exec(function(err, user) {
+          if (err) return next(err);
+          if (!user) return next(new Error('Failed to load User ' + id));
+          req.profile = user;
+          next();
+      });
 };
 
 /**

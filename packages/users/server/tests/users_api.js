@@ -64,6 +64,7 @@ describe('<Rotuing Test>', function() {
     });
 
     it('route user register', function(done){
+      var file1Path = __dirname + '/test_files/test.png';
       var data = {
         email: 'test' + getRandomString() + '@test.com',
         password: 'abcd1234',
@@ -72,30 +73,22 @@ describe('<Rotuing Test>', function() {
       request(url)
         .post('/register')
         .set('User-Agent', user_agent)
-        .send(data)
+        //.send(data)
+        .field('email', data.email)
+        .field('password', data.password)
+        .field('confirmPassword', data.confirmPassword)
+        .attach('file1', file1Path)
         .end(function(err, res){
           if(err){
             throw err;
           }
           should.not.exist(err);
+          var r = eval("("+res.text+")");
+          //console.log(r);
+
           res.should.have.status(200);
-          //res.body.should.have.property('msg');
           done();
       });
-    });
-
-    it('upload test', function(done){
-      var file1Path = __dirname + '/test_files/test.png';
-      request(url)
-        .post('/upload')
-        .attach('file1', file1Path)
-        .end(function(err, res) {
-          if (err) {
-            throw err;
-          }
-          res.should.have.status(200);
-          done();
-        });
     });
   });
   after(function(done) {
