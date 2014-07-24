@@ -79,7 +79,6 @@ exports.create = function(req, res, next) {
 
       var user = new User(fields);
       user.provider = 'local';
-
       /*
       // because we set our user.provider to local our models/user.js validation will always be true
       //req.assert('name', 'You must enter a name').notEmpty();
@@ -95,6 +94,7 @@ exports.create = function(req, res, next) {
       }
       */
       user.token = user.makeSalt();
+      user.image = path.join('users',path.basename(files.image.path));
       user.roles = ['authenticated'];
       user.save(function(err) {
           if (err) {

@@ -77,14 +77,16 @@ describe('<Rotuing Test>', function() {
         .field('email', data.email)
         .field('password', data.password)
         .field('confirmPassword', data.confirmPassword)
-        .attach('file1', file1Path)
+        .attach('image', file1Path)
         .end(function(err, res){
           if(err){
             throw err;
           }
           should.not.exist(err);
           var r = eval("("+res.text+")");
-          //console.log(r);
+          r.should.have.property('status','0');
+          // 이미지가 있어야함!
+          r.data.should.have.property('image');
 
           res.should.have.status(200);
           done();
