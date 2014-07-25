@@ -15,7 +15,7 @@
 * - [x] CSV 임포터
 
 #### 문규
-* - [ ] Place 모델링
+* - [x] Place 모델링
 * - [ ] Place API 작성
 * - [ ] Place Test 작성
 
