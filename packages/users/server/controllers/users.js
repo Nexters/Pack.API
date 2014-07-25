@@ -74,10 +74,21 @@ exports.create = function(req, res, next) {
     });
     form.uploadDir = path.join(mean.app.get('uploadDir'),'users');
     form.maxFieldsSize = 2 * 1024 * 1024;
+    form.keepExtensions = true;
 
     form.parse(req, function(err, fields, files) {
-      console.log(fields);
-      var user = new User(fields);
+      var kakao;
+      if(typeof(fields.kakao) == 'string'){
+        kakao = require('qs').parse(fields.kakao);
+      }else{
+        kakao = fields.kakao;
+      }
+      var user = new User({
+        email: fields.email,
+        password: fields.password,
+        confirmPassword: fields.confirmPassword,
+        kakao: kakao
+      });
       user.provider = 'local';
       /*
       // because we set our user.provider to local our models/user.js validation will always be true
@@ -93,6 +104,9 @@ exports.create = function(req, res, next) {
         res.fail('10010');
       }
       */
+      if(fields.password !== fields.password){
+        return res.fail('10010');
+      }
       user.token = user.makeSalt();
       if(!!files.image){
         user.image = path.join('users',path.basename(files.image.path));

@@ -15,7 +15,8 @@
 * - [x] CSV 임포터
 * - [ ] 유저가입 실패 상세 에러 메세지 fail 함수 메세지 전송할수 있도록
 * - [ ] 400 500 에러 처리
-* - [ ] nested parameter 처리
+* - [x] nested parameter 처리
+
 #### 문규
 * - [x] Station 관리자 페이지 완성
 * - [ ] Place 모델링

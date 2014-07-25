@@ -124,7 +124,7 @@ describe('<Rotuing Test>', function() {
         .field('email', data.email)
         .field('password', data.password)
         .field('confirmPassword', data.confirmPassword)
-        .field('kakao.id',data.kakao.id)
+        .field('kakao',require('qs').stringify(data.kakao))
         .end(function(err, res){
           if(err){
             throw err;
@@ -133,7 +133,7 @@ describe('<Rotuing Test>', function() {
           var r = eval("("+res.text+")");
           r.should.have.property('status','0');
           // 카카오 정보로 가입함
-          //r.data.should.have.property('kakao');
+          r.data.should.have.property('kakao');
           res.should.have.status(200);
           //removeUser(data.email);
           done();

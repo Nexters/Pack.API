@@ -93,6 +93,8 @@ module.exports = function(passport) {
                 return done(err);
             }
             if(!user){
+              console.log(typeof(profile._json));
+              console.log(profile._json);
                 user = new User({
                     name: profile.username,
                     username: profile.id,
