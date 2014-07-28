@@ -18,8 +18,8 @@ Places.register(function(app, auth, database) {
 
     //We are adding a link to the main menu for all authenticated users
     Places.menus.add({
-        title: 'places example page',
-        link: 'places example page',
+        title: '장소 정보 리스트',
+        link: 'all places',
         roles: ['admin'],
         menu: 'places'
     });

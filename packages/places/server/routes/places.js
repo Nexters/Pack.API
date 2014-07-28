@@ -1,16 +1,18 @@
 'use strict';
-var places = require('../controllers/places'),
+var places = require('../controllers/places');
 
 // The Package is past automatically as first parameter
 module.exports = function(Places, app, auth, database) {
 
-    app.route('places/')
+    app.route('/places')
         .get(places.all)
         .post(places.create);
 
-    app.route('places/:placeId')
-        .get(places.show)
-        .put(places.update)
+    app.route('/places/:placeId')
+        .get(places.show);
+
+    // Finish with setting up the placeId param
+    app.param('placeId', places.place);
 
     /*app.get('/places/example/anyone', function(req, res, next) {
         res.send('Anyone can access this');

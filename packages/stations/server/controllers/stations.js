@@ -55,7 +55,7 @@ exports.create = function(req, res, next) {
 };
 
 /**
- * List of Users
+ * List of Stations
  */
 exports.all = function(req, res) {
     Station.find().sort('-created').populate('').exec(function(err, stations) {

@@ -14,8 +14,6 @@ module.exports = function(Stations, app, auth, database) {
         .get(stations.show)
         .put(stations.update);
 
-    app.route('/stations/near')
-        .get(stations.near);
     app.route('/stations/:stationId/create')
         .post(users.authenticate_token, stations.comment_create);
     app.route('/stations/:stationId/comments')

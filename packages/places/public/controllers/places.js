@@ -6,5 +6,7 @@ angular.module('mean.places').controller('PlacesController', ['$scope', 'Global'
         $scope.package = {
             name: 'places'
         };
+
+        
     }
 ]);

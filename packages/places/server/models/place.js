@@ -29,9 +29,11 @@ var PlaceSchema = new Schema({
 
 
 // Place methods
-PlaceSchema.methods = {
-
-}
+PlaceSchema.load = function(id, callback) {
+  this.findOne({
+    _id: id
+  }).populate('Station').exec(callback);
+};
 
 mongoose.model('Place', PlaceSchema);
 
