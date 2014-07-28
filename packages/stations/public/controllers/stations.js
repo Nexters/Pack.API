@@ -78,6 +78,7 @@ angular.module('mean.stations').controller('StationsController', ['$scope', '$st
                 stationId: $stateParams.stationId
             }, function(station) {
                 $scope.station = station;
+                console.log(station.name);
             });
         };
     }

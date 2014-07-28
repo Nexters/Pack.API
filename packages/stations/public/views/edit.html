@@ -3,7 +3,7 @@
     <div class="form-group" ng-class="{ 'has error' : submitted && stationForm.name.$invalid}">
       <label mean-token="'create-name'" class="col-md-3 control-label" >Name</label>
       <div class="col-md-9">
-        <input name="name" type="text" class="form-control" data-ng-model="name" id="name" placeholder="Station 이름을 입력해주세요." required>
+        <input name="name" type="text" class="form-control" data-ng-model="station.name" id="name" placeholder="Station 이름을 입력해주세요." required>
         <div ng-show="submitted && stationForm.name.$invalid" class="help-block">
           <p ng-show="stationForm.name.$error.required">이름을 입력해주세요.</p>
         </div>
@@ -15,19 +15,19 @@
       <div class="col-md-9">
         <div class="radio-inline">
         <label>
-        <input type="radio" name="type" id="type1" value="airplane" checked>
+        <input type="radio" data-ng-model="station.type" name="type" id="type1" value="Airport">
           Airplane
         </label>
         </div>
         <div class="radio-inline">
         <label>
-        <input type="radio" name="type" id="type2" value="train">
+        <input type="radio" data-ng-model="station.type" name="type" id="type2" value="Train">
           Train
         </label>
         </div>
         <div class="radio-inline">
         <label>
-        <input type="radio" name="type" id="type3" value="bus">
+        <input type="radio" data-ng-model="station.type" name="type" id="type3" value="Bus">
           Bus
         </label>
         </div>
@@ -40,7 +40,7 @@
     <div class="form-group" ng-class="{ 'has error' : submitted && stationForm.loc.$invalid}">
       <label mean-token="'create-location'" class="col-md-3 control-label" >lattitude</label>
       <div class="col-md-9">
-        <input name="lat" type="text" class="form-control" data-ng-model="lat" id="lat" placeholder="location 위도를 입력해주세요." required>
+        <input name="loc[0]" type="text" class="form-control" data-ng-model="station.loc[0]" id="lat" placeholder="location 위도를 입력해주세요." required>
         <div ng-show="submitted && stationForm.lat.$invalid" class="help-block">
           <p ng-show="stationForm.lat.$error.required">위도를 입력해주세요.</p>
         </div>
@@ -50,7 +50,7 @@
     <div class="form-group" ng-class="{ 'has error' : submitted && stationForm.loc.$invalid}">
       <label mean-token="'create-location'" class="col-md-3 control-label" >longitude</label>
       <div class="col-md-9">
-        <input name="lng" type="text" class="form-control" data-ng-model="lng" id="lng" placeholder="location의 경도 입력해주세요." required>
+        <input name="loc[0]" type="text" class="form-control" data-ng-model="station.loc[1]" id="lng" placeholder="location의 경도 입력해주세요." required>
         <div ng-show="submitted && stationForm.lng.$invalid" class="help-block">
           <p ng-show="stationForm.lng.$error.required">경도를 입력해주세요.</p>
         </div>
@@ -60,7 +60,7 @@
     <div class="form-group" ng-class="{ 'has error' : submitted && stationForm.loc.$invalid}">
       <label mean-token="'create-location'" class="col-md-3 control-label" >Address</label>
       <div class="col-md-9">
-        <input name="address" type="text" class="form-control" data-ng-model="address" id="address" placeholder="주소를 입력해주세요." required>
+        <input name="address" type="text" class="form-control" data-ng-model="station.address" id="address" placeholder="주소를 입력해주세요." required>
         <div ng-show="submitted && stationForm.address.$invalid" class="help-block">
           <p ng-show="stationForm.address.$error.required">주소를 입력해주세요.</p>
         </div>

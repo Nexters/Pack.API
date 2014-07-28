@@ -78,7 +78,7 @@ exports.create = function(req, res, next) {
 
     form.parse(req, function(err, fields, files) {
       var kakao;
-      if(typeof(fields.kakao) == 'string'){
+      if(typeof(fields.kakao) === 'string'){
         kakao = require('qs').parse(fields.kakao);
       }else{
         kakao = fields.kakao;

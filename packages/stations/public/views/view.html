@@ -2,7 +2,7 @@
     <span>{{station.created | date:'medium'}}</span> /
     <h2>{{station.name}}</h2>
     <div data-ng-if="hasAuthorization(station)">
-        <a class="btn" href="/#!/articles/{{station._id}}/edit">
+        <a class="btn" href="/#!/stations/{{station._id}}/edit">
             <i class="glyphicon glyphicon-edit"></i>
         </a>
         <a class="btn" data-ng-click="remove(station);">
