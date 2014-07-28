@@ -4,6 +4,20 @@
 * [API](https://github.com/Nexters/Pack.API/wiki/API)
 
 ## TODO
+### 7월 5주차
+#### 문규
+* - [ ] Bootstrap 프론트 엔드 조금봐!
+* - [ ] GuestHouse 모델링 대략 한번!
+* - [ ] 기획 확정 전체 모델링
+* - [ ] API 설계
+
+#### 재영
+* - [ ] 유저 카카오 인증
+* - [ ] 기획 확정 전체 모델링
+* - [ ] API 설계
+
+
+
 ### 7월 4주차
 #### 재영
 * - [x] Station near api
