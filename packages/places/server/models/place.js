@@ -18,18 +18,18 @@ var PlaceSchema = new Schema({
   },
   name: {
       type: String,
-      required: true, 
+      required: true,
       trim: true
   },
   type: { type: String, enum:['sightseeing', 'food', 'store']},
   loc: { type: [Number], index:'2d'},
-  near_station: { type: Schema.ObjectId, ref: 'Station'}, 
+  near_station: { type: Schema.ObjectId, ref: 'Station'},
   content: { type: String }
 });
 
 
 // Place methods
-PlaceSchema.load = function(id, callback) {
+PlaceSchema.statics.load = function(id, callback) {
   this.findOne({
     _id: id
   }).populate('Station').exec(callback);

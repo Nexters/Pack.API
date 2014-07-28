@@ -7,7 +7,8 @@ var should = require('should'),
     request = require('supertest'),
     mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    Place = mongoose.model('Place');
+    Place = mongoose.model('Place'),
+    Station = mongoose.model('Station');
 
 var new_place;
 
@@ -20,7 +21,7 @@ describe('<Routing Test>', function () {
       type: 'sightseeing',
       loc: [48.8583, 2.2945],
       near_station: new Station({
-        name: '테스트 역',
+        name: '테스트 역2',
         type: 'Airport',
         loc: [35.549393, 139.779839],
         address: '3-3-2 Hanedakuko, Ota, Tokyo 144-0041 일본 222',
@@ -30,6 +31,7 @@ describe('<Routing Test>', function () {
     });
     new_place.save(function(err) {
       should.not.exist(err);
+      done();
     });
   });
 
@@ -43,6 +45,7 @@ describe('<Routing Test>', function () {
             throw err;
           }
           should.not.exist(err);
+          console.log(res.text);
           var r = eval('('+res.text+')');
           // 상태코드 0 이여야 한다.
           r.should.have.property('status','0');
@@ -55,7 +58,7 @@ describe('<Routing Test>', function () {
   });
 
   after(function(done) {
-    station.remove();
+    new_place.remove();
     done();
   });
 });
