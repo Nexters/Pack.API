@@ -88,7 +88,7 @@ module.exports = function(grunt) {
         },
         mochaTest: {
             options: {
-                reporter: 'spec',
+                reporter: 'nyan', // spec, min, List, tap
                 require: [
                     'server.js',
                     function() {

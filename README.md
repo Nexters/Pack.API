@@ -13,8 +13,13 @@
 * - [ ] Mongoose API
 * - [ ] MongoDB
 * - [x] CSV 임포터
+* - [ ] 유저가입 실패 상세 에러 메세지 fail 함수 메세지 전송할수 있도록
+* - [ ] 400 500 에러 처리
+* - [x] nested parameter 처리
 
 #### 문규
+
+* - [x] Station 관리자 페이지 완성
 * - [x] Place 모델링
 * - [ ] Place API 작성
 * - [ ] Place Test 작성
@@ -24,8 +29,8 @@
   - grunt mochaTest
   - grunt mochaTest:src // 전부다
   - grunt mochaTest:user //유저관련
-  
-  
+
+
 ## 배포
 ### 설치하기
 ===
@@ -50,7 +55,7 @@
 	- *Mongoose Guide* [http://mongoosejs.com/docs/guide.html](http://mongoosejs.com/docs/guide.html)
 	- *Mongoose API* [http://mongoosejs.com/docs/api.html](http://mongoosejs.com/docs/api.html)
 	- *Mongodb* [http://docs.mongodb.org/manual/core/crud-introduction/](http://docs.mongodb.org/manual/core/crud-introduction/)
-	
+
 - 테스트
 	- *Should* : [https://github.com/visionmedia/should.js](https://github.com/visionmedia/should.js/)
  	- *SupperTest* : [https://github.com/visionmedia/supertest](https://github.com/visionmedia/supertest)

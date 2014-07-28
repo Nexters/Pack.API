@@ -31,6 +31,10 @@ module.exports = {
         clientSecret: 'SECRET_KEY',
         callbackURL: 'http://localhost:3000/auth/linkedin/callback'
     },
+    kakao: {
+        clientID : '97d9af9268a1711ea6a0e3ce46ea9fa6',
+        callbackURL: 'http://localhost:3001/auth/kakao/callback'
+    },
     emailFrom : 'SENDER EMAIL ADDRESS', // sender address like ABC <abc@example.com>
     mailer: {
         service: 'SERVICE_PROVIDER',
