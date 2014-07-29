@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Station = mongoose.model('Station');
+    Station = mongoose.model('Station'),
+    _ = require('lodash');
 
 /**
  * Show an Near Station
@@ -90,9 +91,17 @@ exports.station = function(req, res, next, id) {
 };
 
 // Updates station.
-exports.update = function(req, res, next, id) {
-  Station
-    .findByIdAndUpdate(id, req.body, function(err) {
-      if (err) return next(err);
-    });
+exports.update = function(req, res) {
+  var station = req.station;
+
+  station = _.extend(station, req.body);
+
+  station.save(function(err) {
+    if (err) {
+      return res.fail('20001');
+    }
+    res.success(station);
+  });
 };
+
+

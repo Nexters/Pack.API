@@ -20,6 +20,9 @@ var StationSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    updated: {
+        type: Date
+    },
     name: {
         type: String,
         required: true,

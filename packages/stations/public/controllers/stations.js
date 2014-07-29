@@ -60,7 +60,7 @@ angular.module('mean.stations').controller('StationsController', ['$scope', '$st
                 station.updated.push(new Date().getTime());
 
                 station.$update(function() {
-                    $location.path('station/' + station._id);
+                    $location.path('stations/' + station._id);
                 });
             } else {
                 $scope.submitted = true;
@@ -78,8 +78,16 @@ angular.module('mean.stations').controller('StationsController', ['$scope', '$st
                 stationId: $stateParams.stationId
             }, function(station) {
                 $scope.station = station;
-                console.log(station.name);
             });
+        };
+
+        $scope.date = function(station) {
+            var date = station.created;
+            if(station.updated) {
+                date = station.updated;
+            }
+
+            return date;
         };
     }
 ]);

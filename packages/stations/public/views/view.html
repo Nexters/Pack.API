@@ -1,5 +1,5 @@
 <section data-ng-controller="StationsController" data-ng-init="findOne()">
-    <span>{{station.created | date:'medium'}}</span> /
+    <span>{{date(station) | date:'medium'}}</span> /
     <h2>{{station.name}}</h2>
     <div data-ng-if="hasAuthorization(station)">
         <a class="btn" href="/#!/stations/{{station._id}}/edit">

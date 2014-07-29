@@ -1,7 +1,7 @@
 <section data-ng-controller="StationsController" data-ng-init="find()">
     <ul>
         <li data-ng-repeat="station in stations">
-            <span>{{station.created | date:'medium'}}</span> 
+            <span>{{date(station) | date:'medium'}}</span> 
             <h2>
                 <a data-ng-href="#!/stations/{{station._id}}">{{station.name}}</a>
                 <span data-ng-if="hasAuthorization(station)">
