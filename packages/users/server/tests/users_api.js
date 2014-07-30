@@ -139,6 +139,30 @@ describe('<Rotuing Test>', function() {
           done();
       });
     });
+
+    it('route check kakao id', function(done){
+      var data = {
+        channel: 'kakao',
+        id: '1233160'
+      };
+      request(url)
+        .post('/check')
+        .set('User-Agent', user_agent)
+        .send(data)
+        .end(function(err, res){
+          if(err){
+            throw err;
+          }
+          should.not.exist(err);
+          var r = eval("("+res.text+")");
+          r.should.have.property('status','0');
+          // 카카오 아이디가 요청한값이랑 같아야함
+          r.data.kakao.should.have.property('id',data.id);
+          res.should.have.status(200);
+          //removeUser(data.email);
+          done();
+      });
+    });
   });
   after(function(done) {
     user.remove();

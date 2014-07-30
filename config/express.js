@@ -59,7 +59,7 @@ module.exports = function(app, passport, db) {
     app.use(expressValidator());
     app.use(bodyParser.urlencoded({ extended: true }))
     app.use(bodyParser.json({ extended: true }));
-
+    app.use(bodyParser({ extended: true }));
     app.use(methodOverride());
 
     /**

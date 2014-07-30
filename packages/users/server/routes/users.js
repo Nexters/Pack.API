@@ -20,15 +20,15 @@ module.exports = function(MeanUser, app, auth, database, passport) {
     app.route('/users')
         .get(users.all);
 
-    // Setting the local strategy route
     app.route('/login')
         .post(passport.authenticate('local', {
 
         }), users.login);
-    // Setting up the users api
     app.route('/register')
         .post(users.create);
 
+    app.route('/check')
+        .post(users.check);
 
     // -----
     app.route('/logout')
@@ -114,7 +114,9 @@ module.exports = function(MeanUser, app, auth, database, passport) {
         }), users.authCallback);
 
     app.route('/auth/kakao')
-        .get(passport.authenticate('kakao'),users.check);
+        .get(passport.authenticate('kakao'), function(req, res){
+          res.send('......');
+        });
 
     app.get('/auth/kakao/callback', passport.authenticate('kakao', {
         failureRedirect: '#!/login'

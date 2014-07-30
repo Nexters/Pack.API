@@ -50,14 +50,14 @@ exports.all = function(req, res) {
 */
 exports.login = function(req, res){
     if(res.isMobile()){
-        var user = req.user;
-        user.token = user.makeSalt();
-        user.save(function(err) {
-            if (err) {
-                return res.fail('10002');
-            }
-            res.success(user);
-        });
+      var user = req.user;
+      user.token = user.makeSalt();
+      user.save(function(err) {
+          if (err) {
+              return res.fail('10002');
+          }
+          res.success(user);
+      });
     }else{
         res.send({
             user: req.user,
@@ -69,6 +69,7 @@ exports.login = function(req, res){
  * Create user
  */
 exports.create = function(req, res, next) {
+    console.log(req.body);
     var form = new formidable.IncomingForm({
       keepExtensions: true
     });
@@ -77,12 +78,17 @@ exports.create = function(req, res, next) {
     form.keepExtensions = true;
 
     form.parse(req, function(err, fields, files) {
-      var kakao;
+      var fields = require('qs').parse(fields);
+      var kakao = fields.kakao;
+      console.log(kakao);
+      /*
       if(typeof(fields.kakao) === 'string'){
         kakao = require('qs').parse(fields.kakao);
       }else{
         kakao = fields.kakao;
+        console.log(kakao);
       }
+      */
       var user = new User({
         email: fields.email,
         password: fields.password,
@@ -132,7 +138,27 @@ exports.create = function(req, res, next) {
     });
 };
 exports.check = function(req, res){
-  var user = req.user;
+  var channel = req.body.channel;
+  var id = req.body.id;
+  if(channel === 'kakao'){
+    User
+      .findOne({
+          'kakao.id': id
+      })
+      .exec(function(err, user) {
+          res.success(user);
+      });
+  }else if(channel === 'local'){
+      User
+      .findOne({
+          'token': id
+      })
+      .exec(function(err, user) {
+          res.success(user);
+      });
+  }else{
+    res.fail('19001');
+  }
 };
 /**
 
