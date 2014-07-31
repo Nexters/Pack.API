@@ -24,6 +24,7 @@ module.exports = function(MeanUser, app, auth, database, passport) {
         .post(passport.authenticate('local', {
 
         }), users.login);
+
     app.route('/register')
         .post(users.create);
 

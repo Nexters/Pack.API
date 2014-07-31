@@ -38,7 +38,6 @@ describe('<Routing Test>', function () {
             throw err;
           }
           should.not.exist(err);
-          console.log(res.text);
           var r = eval('('+res.text+')');
           // 상태코드 0 이여야 한다.
           r.should.have.property('status','0');
