@@ -48,9 +48,9 @@ GuesthouseSchema.statics.load = function(id, cb) {
     }).populate({ type: 'near_stations', select: 'name' }).exec(cb);
 };
 
-GusethouseSchema.statics.all = function(cb) {
-    Guesthouse.find().sort('-created').exec(cb);
-}
+GuesthouseSchema.statics.all = function(cb) {
+    this.find().sort('-created').exec(cb);
+};
 /**
  * Methods
  */

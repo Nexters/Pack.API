@@ -1,16 +1,17 @@
 'use strict';
+var guesthouses = require('../controllers/guesthouses');
 
 // The Package is past automatically as first parameter
 module.exports = function(Guesthouses, app, auth, database) {
 
     app.route('/guesthouses')
-        .get(stations.all)
-        .post(stations.create);
-  
-    app.route('/guesthouses/:stationId')
-        .put(stations.update)
-        .get(stations.show);
+        .get(guesthouses.all)
+        .post(guesthouses.create);
 
-    app.param('stationId', stations.station);
+    app.route('/guesthouses/:gusethouseId')
+        .put(guesthouses.update)
+        .get(guesthouses.show);
+
+    app.param('gusethouseId', guesthouses.guesthouse);
 
 };

@@ -43,7 +43,7 @@ exports.all = function(req, res) {
  * Find gusethouse by id
  */
 exports.gusethouse = function(req, res, next, id) {
-  Gusethouse.load(id, function(err, guesthouse) {
+  Guesthouse.load(id, function(err, guesthouse) {
       if (err) return next(err);
       if (!guesthouse) return next(new Error(id+':Guesthouse 정보를 가져오는데 실패 했습니다.'));
       req.guesthouse = guesthouse;
