@@ -30,6 +30,27 @@ angular.module('mean.places').config(['$stateProvider',
             resolve:{
                 loggedin: checkLoggedin 
             }
+        }).
+        state('new place', {
+            url:'/places/new',
+            templateUrl: 'places/views/new.html',
+            resolve:{
+                loggedin: checkLoggedin 
+            }
+        }).
+        state('edit place', {
+            url:'/places/:stationId/edit',
+            templateUrl: 'places/views/edit.html',
+            resolve:{
+              loggedin: checkLoggedin 
+            }
+        }).
+        state('place', {
+            url: '/places/:stationId',
+            templateUrl: 'places/views/view.html',
+            resolve: {
+              loggedin: checkLoggedin 
+            }
         });
     }
 ]);
