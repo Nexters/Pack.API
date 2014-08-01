@@ -13,6 +13,7 @@ var mongoose = require('mongoose'),
     util = require('util'),
     path = require('path'),
     mean = require('meanio'),
+    type_is   = require('type-is'),
     templates = require('../template');
 
 exports.authenticate_token = function(req, res, next) {
@@ -50,14 +51,14 @@ exports.all = function(req, res) {
 */
 exports.login = function(req, res){
     if(res.isMobile()){
-        var user = req.user;
-        user.token = user.makeSalt();
-        user.save(function(err) {
-            if (err) {
-                return res.fail('10002');
-            }
-            res.success(user);
-        });
+      var user = req.user;
+      user.token = user.makeSalt();
+      user.save(function(err) {
+          if (err) {
+              return res.fail('10002');
+          }
+          res.success(user);
+      });
     }else{
         res.send({
             user: req.user,
@@ -69,53 +70,80 @@ exports.login = function(req, res){
  * Create user
  */
 exports.create = function(req, res, next) {
-    var form = new formidable.IncomingForm({
-      keepExtensions: true
-    });
-    form.uploadDir = path.join(mean.app.get('uploadDir'),'users');
-    form.maxFieldsSize = 2 * 1024 * 1024;
-    form.keepExtensions = true;
-
-    form.parse(req, function(err, fields, files) {
-      var kakao;
-      if(typeof(fields.kakao) === 'string'){
-        kakao = require('qs').parse(fields.kakao);
-      }else{
-        kakao = fields.kakao;
-      }
-      var user = new User({
-        email: fields.email,
-        password: fields.password,
-        confirmPassword: fields.confirmPassword,
-        kakao: kakao
+    if(type_is(req, ['multipart'])){
+      var form = new formidable.IncomingForm({
+        keepExtensions: true
       });
-      user.provider = 'local';
-      /*
-      // because we set our user.provider to local our models/user.js validation will always be true
-      //req.assert('name', 'You must enter a name').notEmpty();
-      user.assert('email', 'You must enter a valid email address').isEmail();
-      user.assert('password', 'Password must be between 8-20 characters long').len(8, 20);
-      //req.assert('username', 'Username cannot be more than 20 characters').len(1,20);
-      user.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
+      form.uploadDir = path.join(mean.app.get('uploadDir'),'users');
+      form.maxFieldsSize = 30 * 1024 * 1024;
+      form.keepExtensions = true;
 
-      var errors = req.validationErrors();
-      if (errors) {
-        console.log(errors);
-        res.fail('10010');
+      form.parse(req, function(err, fields, files) {
+        fields = require('qs').parse(fields);
+        var kakao = fields.kakao;
+
+        var user = new User({
+          email: fields.email,
+          password: fields.password,
+          confirmPassword: fields.confirmPassword,
+          kakao: kakao
+        });
+        user.provider = 'local';
+
+        if(fields.password.length < 8){
+          return res.fail('10011');
+        }
+        if(fields.password !== fields.password){
+          return res.fail('10010');
+        }
+
+        user.token = user.makeSalt();
+        if(!!files.image){
+          user.image = path.join('users',path.basename(files.image.path));
+        }
+        user.roles = ['authenticated'];
+        user.save(function(err) {
+            if (err) {
+                if(err.code === 11000){
+                  return res.fail('10003');
+                }
+                if(err.errors.email !== null){
+                  return res.fail('19002');
+                }
+                return res.fail('19000');
+            }
+            if(res.isMobile()){
+              // 유저 이미지 업로드!
+              res.success(user);
+            }else{
+              req.logIn(user, function(err) {
+                if (err) return next(err);
+                return res.redirect('/');
+              });
+            }
+        });
+      });
+    }else{
+      var user = new User(req.body);
+      user.provider = 'local';
+      var fields = req.body;
+      if(fields.password.length < 8){
+        return res.fail('10011');
       }
-      */
       if(fields.password !== fields.password){
         return res.fail('10010');
       }
+
       user.token = user.makeSalt();
-      if(!!files.image){
-        user.image = path.join('users',path.basename(files.image.path));
-      }
+
       user.roles = ['authenticated'];
       user.save(function(err) {
           if (err) {
               if(err.code === 11000){
                 return res.fail('10003');
+              }
+              if(err.errors.email !== null){
+                return res.fail('19002');
               }
               return res.fail('19000');
           }
@@ -129,10 +157,32 @@ exports.create = function(req, res, next) {
             });
           }
       });
-    });
+    }
 };
+
+
 exports.check = function(req, res){
-  var user = req.user;
+  var channel = req.body.channel;
+  var id = req.body.id;
+  if(channel === 'kakao'){
+    User
+      .findOne({
+          'kakao.id': id
+      })
+      .exec(function(err, user) {
+          res.success(user);
+      });
+  }else if(channel === 'local'){
+      User
+      .findOne({
+          'token': id
+      })
+      .exec(function(err, user) {
+          res.success(user);
+      });
+  }else{
+    res.fail('19001');
+  }
 };
 /**
 

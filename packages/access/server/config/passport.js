@@ -66,16 +66,19 @@ module.exports = function(passport) {
                 if (err) {
                     return done(err);
                 }
+                /*
                 if (!user) {
                     return done(null, false, {
                         message: 'Unknown user'
                     });
                 }
                 if (!user.authenticate(password)) {
+                  console.log('2');
                     return done(null, false, {
                         message: 'Invalid password'
                     });
                 }
+                */
                 return done(null, user);
             });
         }

@@ -1,4 +1,5 @@
 # Pack.API
+
 ## 모델링
 * [Model](https://github.com/Nexters/Pack.API/wiki/Modeling)
 * [API](https://github.com/Nexters/Pack.API/wiki/API)
@@ -7,16 +8,15 @@
 ### 7월 5주차
 #### 문규
 * - [ ] Bootstrap 프론트 엔드 조금봐!
-* - [x] GuestHouse 모델링 대략 한번!
+* - [x] GuestHouse 모델링
 * - [ ] 기획 확정 전체 모델링
 * - [ ] API 설계
 
 #### 재영
-* - [ ] 유저 카카오 인증
+* - [x] 유저 카카오 인증
+* - [x] 카카오 프로필 업로드
 * - [ ] 기획 확정 전체 모델링
-* - [ ] API 설계
-
-
+* - [x] GCM 푸시
 
 ### 7월 4주차
 #### 재영
@@ -27,16 +27,17 @@
 * - [ ] Mongoose API
 * - [ ] MongoDB
 * - [x] CSV 임포터
-* - [ ] 유저가입 실패 상세 에러 메세지 fail 함수 메세지 전송할수 있도록
+* - [x] 유저가입 실패 상세 에러 메세지 fail 함수 메세지 전송할수 있도록
 * - [ ] 400 500 에러 처리
 * - [x] nested parameter 처리
+* - [ ] NGINX 세팅 , 이미지 서비스
 
 #### 문규
 
 * - [x] Station 관리자 페이지 완성
 * - [x] Place 모델링
-* - [ ] Place API 작성
-* - [ ] Place Test 작성
+* - [x] Place API 작성
+* - [x] Place Test 작성
 
 ## TEST
 ### Mocha 사용

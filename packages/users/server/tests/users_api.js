@@ -72,6 +72,40 @@ describe('<Rotuing Test>', function() {
           done();
       });
     });
+    it('route user register no image', function(done){
+      var data = {
+        email: 'test' + getRandomString() + '@test.com',
+        password: 'abcd1234',
+        confirmPassword: 'abcd1234',
+        kakao: {
+          properties: {
+            "profile_image" : "http://mud-kage.kakao.co.kr/14/dn/btqbqQ6UjAO/PcZD4vxiEdfUrVxE6bBQVK/o.jpg",
+            "thumbnail_image" : "http://mud-kage.kakao.co.kr/14/dn/btqbqUhacZG/kkZ3ONvwPjJuJ7qVKdkCG1/o.jpg",
+            "nickname" : "김재영"
+          },
+          id: 1233160
+        }
+      };
+      request(url)
+        .post('/register')
+        .set('User-Agent', user_agent)
+        .send(data)
+        .end(function(err, res){
+          if(err){
+            throw err;
+          }
+          should.not.exist(err);
+          var r = eval("("+res.text+")");
+          r.should.have.property('status','0');
+          // 이미지가 있어야함!
+          r.data.should.have.not.property('image');
+          // 카카오 정보로 가입함
+          r.data.should.have.property('kakao');
+          removeUser(data.email);
+          res.should.have.status(200);
+          done();
+      });
+    });
 
     it('route user register', function(done){
       var file1Path = __dirname + '/test_files/test.png';
@@ -104,7 +138,6 @@ describe('<Rotuing Test>', function() {
     });
 
     it('route user register by kakao', function(done){
-      var file1Path = __dirname + '/test_files/test.png';
       var data = {
         email: 'test' + getRandomString() + '@test.com',
         password: 'abcd1234',
@@ -134,6 +167,30 @@ describe('<Rotuing Test>', function() {
           r.should.have.property('status','0');
           // 카카오 정보로 가입함
           r.data.should.have.property('kakao');
+          res.should.have.status(200);
+          //removeUser(data.email);
+          done();
+      });
+    });
+
+    it('route check kakao id', function(done){
+      var data = {
+        channel: 'kakao',
+        id: '1233160'
+      };
+      request(url)
+        .post('/check')
+        .set('User-Agent', user_agent)
+        .send(data)
+        .end(function(err, res){
+          if(err){
+            throw err;
+          }
+          should.not.exist(err);
+          var r = eval("("+res.text+")");
+          r.should.have.property('status','0');
+          // 카카오 아이디가 요청한값이랑 같아야함
+          r.data.kakao.should.have.property('id',data.id);
           res.should.have.status(200);
           //removeUser(data.email);
           done();
