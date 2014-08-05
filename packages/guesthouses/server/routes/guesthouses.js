@@ -12,6 +12,6 @@ module.exports = function(Guesthouses, app, auth, database) {
         .put(guesthouses.update)
         .get(guesthouses.show);
 
-    app.param('gusethouseId', guesthouses.guesthouse);
+    //app.param('gusethouseId', guesthouses.guesthouse);
 
 };

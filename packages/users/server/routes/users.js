@@ -29,7 +29,7 @@ module.exports = function(MeanUser, app, auth, database, passport) {
         .post(users.create);
 
     app.route('/check')
-        .post(users.check);
+        .post(users.check, users.create);
 
     // -----
     app.route('/logout')

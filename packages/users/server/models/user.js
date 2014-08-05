@@ -31,11 +31,11 @@ var UserSchema = new Schema({
         type: String
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
-        match: [/.+\@.+\..+/, 'Please enter a valid email'],
-        validate: [validateUniqueEmail, 'E-mail address is already in-use']
+        type: String
+        //required: true,
+        //unique: true,
+        //match: [/.+\@.+\..+/, 'Please enter a valid email'],
+        //validate: [validateUniqueEmail, 'E-mail address is already in-use']
     },
     username: {
         type: String
@@ -45,8 +45,8 @@ var UserSchema = new Schema({
         default: ['authenticated']
     },
     hashed_password: {
-        type: String,
-        validate: [validatePresenceOf, 'Password cannot be blank']
+        type: String
+        //validate: [validatePresenceOf, 'Password cannot be blank']
     },
     provider: {
         type: String,
@@ -75,9 +75,12 @@ var UserSchema = new Schema({
 UserSchema.path('token').validate(function(token) {
     return !!token;
 }, 'Token cannot be blank');
+
+/*
 UserSchema.path('email').validate(function(email) {
     return !!email;
 }, 'Email cannot be blank');
+*/
 
 /**
  * Virtuals
@@ -95,8 +98,10 @@ UserSchema.virtual('password').set(function(password) {
  * Pre-save hook
  */
 UserSchema.pre('save', function(next) {
+    /*
     if (this.isNew && this.provider === 'local' && this.password && !this.password.length)
         return next(new Error('Invalid password'));
+      */
     next();
 });
 
