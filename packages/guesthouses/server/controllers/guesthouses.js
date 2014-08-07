@@ -39,6 +39,16 @@ exports.all = function(req, res) {
     });
 };
 
+exports.near = function(req, res) {
+  var q = Guesthouse.find({ 'loc': { $near: [ req.body.lat, req.body.lng] }});
+  q.limit(10)
+  q.exec(function(err, station){
+    if(err){
+      return res.fail('30003');
+    }
+    res.success(station);
+  });
+};
 /*
  * Find gusethouse by id
  */

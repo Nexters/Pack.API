@@ -8,6 +8,7 @@ var should = require('should'),
 var new_place;
 
 describe('Model test', function (){
+
   beforeEach(function(done) {
     new_place = new Place({
       name: '에펠탑 test',

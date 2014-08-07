@@ -18,7 +18,7 @@ describe('<Rotuing Test>', function() {
   var user_agent = 'User-Agent: Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/420.1 (KHTML, like Gecko) Version/3.0 Mobile/1A542a Safari/419.3';
   before(function(done) {
       station = new Station({
-        name: '테스트 역',
+        name: '테스트 역2',
         type: 'Airport',
         loc: [35.549393, 139.779839],
         address: '3-3-2 Hanedakuko, Ota, Tokyo 144-0041 일본 222',

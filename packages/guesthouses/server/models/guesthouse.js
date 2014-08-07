@@ -28,7 +28,7 @@ var GuesthouseSchema = new Schema({
     address: String,
     hidden: Boolean,
     near_stations: [{ type: Schema.Types.ObjectId, ref: 'Station' }],
-    price: Number
+    price: String
 });
 
 /**

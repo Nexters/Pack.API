@@ -39,7 +39,7 @@ function createDocRecurse (err) {
           }
           line.split(',').forEach(function (entry, i) {
             if(schemaKeyList[i] === 'loc'){
-              entry = [ Number(entry.split('..')[0]), Number(entry.split('..')[1]) ];
+              entry = [ Number(entry.split(':')[0]), Number(entry.split(':')[1]) ];
             }
             doc[schemaKeyList[i]] = entry;
           });
