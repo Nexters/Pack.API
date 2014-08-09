@@ -1,17 +1,19 @@
 #!/usr/bin/node
 
-var mongoose = require('mongoose'),
-  StationSchema = require('../packages/stations/server/models/station');
+var targetModel = process.argv[2];
 
-var Station = mongoose.model('Station', StationSchema);
+var mongoose = require('mongoose'),
+  ModelSchema = require('../packages/'+targetModel.toLowerCase()+'s/'+'server/models/'+ targetModel.toLowerCase());
+
+var Model = mongoose.model(targetModel, ModelSchema);
+
 var mean = require('meanio'),
   config = mean.loadConfig();
-
 
 mongoose.connect(config['db']);
 
 var fs = require('fs');
-var lineList = fs.readFileSync(__dirname + '/data/data.csv').toString().split('\n');
+var lineList = fs.readFileSync(__dirname + '/data/'+targetModel.toLowerCase()+'.csv').toString().split('\n');
 var header = lineList.shift();
 console.log(header.split(','));
 
@@ -27,17 +29,17 @@ function createDocRecurse (err) {
         var line = lineList.shift();
         var doc;
         var key = line.split(',')[0];
-        Station.findOne({
+        Model.findOne({
             name: key
-        }, function(err,station){
-          if(err || station == null){
-            doc = new Station();
+        }, function(err, model){
+          if(err || model == null){
+            doc = new Model();
           }else{
-            doc = station;
+            doc = model;
           }
           line.split(',').forEach(function (entry, i) {
             if(schemaKeyList[i] === 'loc'){
-              entry = [ Number(entry.split('..')[0]), Number(entry.split('..')[1]) ];
+              entry = [ Number(entry.split(':')[0]), Number(entry.split(':')[1]) ];
             }
             doc[schemaKeyList[i]] = entry;
           });

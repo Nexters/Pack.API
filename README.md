@@ -39,6 +39,10 @@
 * - [x] Place API 작성
 * - [x] Place Test 작성
 
+## CSV 임포터
+- node scripts/importer.js <모델명>
+-  node scripts/importer.js Station # data/station.csv 파일을 읽어온다.
+
 ## TEST
 ### Mocha 사용
   - grunt mochaTest

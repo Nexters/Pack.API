@@ -8,10 +8,12 @@ module.exports = function(Guesthouses, app, auth, database) {
         .get(guesthouses.all)
         .post(guesthouses.create);
 
-    app.route('/guesthouses/:guesthouseId')
+    app.route('/guesthouses/near')
+        .post(guesthouses.near);
+
+    app.route('/guesthouses/:gusethouseId')
         .put(guesthouses.update)
         .get(guesthouses.show);
 
-    app.param('guesthouseId', guesthouses.guesthouse);
-
+    //app.param('gusethouseId', guesthouses.guesthouse);
 };

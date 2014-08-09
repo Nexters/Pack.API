@@ -80,105 +80,130 @@ exports.create = function(req, res, next) {
 
       form.parse(req, function(err, fields, files) {
         fields = require('qs').parse(fields);
+
         var kakao = fields.kakao;
 
-        var user = new User({
-          email: fields.email,
-          password: fields.password,
-          confirmPassword: fields.confirmPassword,
-          kakao: kakao
-        });
-        user.provider = 'local';
-
-        if(fields.password.length < 8){
-          return res.fail('10011');
-        }
-        if(fields.password !== fields.password){
-          return res.fail('10010');
+        if(typeof(kakao) === 'string'){
+          kakao = require('qs').parse(kakao);
         }
 
-        user.token = user.makeSalt();
-        if(!!files.image){
-          user.image = path.join('users',path.basename(files.image.path));
-        }
-        user.roles = ['authenticated'];
-        user.save(function(err) {
-            if (err) {
-                if(err.code === 11000){
-                  return res.fail('10003');
+        User
+          .findOne({
+              'kakao.id': kakao.id
+          })
+          .exec(function(err, user) {
+              if(user !== null){
+                return res.success(user);
+              }else{
+                user = new User({
+                  //email: fields.email,
+                  //password: fields.password,
+                  //confirmPassword: fields.confirmPassword,
+                  kakao: kakao
+                });
+                user.provider = 'kakao';
+
+                /*
+                if(fields.password.length < 8){
+                  return res.fail('10011');
                 }
-                if(err.errors.email !== null){
-                  return res.fail('19002');
+                if(fields.password !== fields.password){
+                  return res.fail('10010');
                 }
-                return res.fail('19000');
-            }
-            if(res.isMobile()){
-              // 유저 이미지 업로드!
-              res.success(user);
-            }else{
-              req.logIn(user, function(err) {
-                if (err) return next(err);
-                return res.redirect('/');
-              });
-            }
-        });
+                */
+
+                user.token = user.makeSalt();
+                if(!!files.image){
+                  user.image = path.join('users',path.basename(files.image.path));
+                }
+                user.roles = ['authenticated'];
+                user.save(function(err) {
+                    if (err) {
+                        if(err.code === 11000){
+                          return res.fail('10003');
+                        }
+                        if(err.errors.email !== null){
+                          return res.fail('19002');
+                        }
+                        return res.fail('19000');
+                    }
+                    if(res.isMobile()){
+                      // 유저 이미지 업로드!
+                      res.success(user);
+                    }else{
+                      req.logIn(user, function(err) {
+                        if (err) return next(err);
+                        return res.redirect('/');
+                      });
+                    }
+                });
+              }
+          });
       });
     }else{
-      var user = new User(req.body);
-      user.provider = 'local';
-      var fields = req.body;
-      if(fields.password.length < 8){
-        return res.fail('10011');
-      }
-      if(fields.password !== fields.password){
-        return res.fail('10010');
-      }
-
-      user.token = user.makeSalt();
-
-      user.roles = ['authenticated'];
-      user.save(function(err) {
-          if (err) {
-              if(err.code === 11000){
-                return res.fail('10003');
-              }
-              if(err.errors.email !== null){
-                return res.fail('19002');
-              }
-              return res.fail('19000');
-          }
-          if(res.isMobile()){
-            // 유저 이미지 업로드!
-            res.success(user);
+      User
+        .findOne({
+            'kakao.id': req.body.kakao.id
+        })
+        .exec(function(err, user) {
+          if(user !== null){
+            return res.success(user);
           }else{
-            req.logIn(user, function(err) {
-              if (err) return next(err);
-              return res.redirect('/');
+            user = new User(req.body);
+            user.provider = 'kakao';
+            var fields = req.body;
+            /*
+            if(fields.password.length < 8){
+              return res.fail('10011');
+            }
+            if(fields.password !== fields.password){
+              return res.fail('10010');
+            }
+            */
+            user.token = user.makeSalt();
+
+            user.roles = ['authenticated'];
+            user.save(function(err) {
+                if (err) {
+                    if(err.code === 11000){
+                      return res.fail('10003');
+                    }
+                    if(err.errors.email !== null){
+                      return res.fail('19002');
+                    }
+                    return res.fail('19000');
+                }
+                if(res.isMobile()){
+                  // 유저 이미지 업로드!
+                  res.success(user);
+                }else{
+                  req.logIn(user, function(err) {
+                    if (err) return next(err);
+                    return res.redirect('/');
+                  });
+                }
             });
           }
-      });
+        });
     }
 };
 
 
-exports.check = function(req, res){
+exports.check = function(req, res, next){
   var channel = req.body.channel;
-  var id = req.body.id;
-  if(channel === 'kakao'){
+  if(channel === 'local'){
+    var token = req.body.token;
     User
       .findOne({
-          'kakao.id': id
+          'token': token
       })
       .exec(function(err, user) {
-          res.success(user);
-      });
-  }else if(channel === 'local'){
-      User
-      .findOne({
-          'token': id
-      })
-      .exec(function(err, user) {
-          res.success(user);
+          if( user !== null){
+            res.success(user);
+          }else{
+            res.fail(10004);
+          }
+
       });
   }else{
     res.fail('19001');

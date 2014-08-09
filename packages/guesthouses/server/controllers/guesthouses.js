@@ -41,11 +41,22 @@ exports.all = function(req, res) {
     });
 };
 
+exports.near = function(req, res) {
+  var q = Guesthouse.find({ 'loc': { $near: [ req.body.lat, req.body.lng] }});
+  q.limit(10)
+  q.exec(function(err, station){
+    if(err){
+      return res.fail('30003');
+    }
+    res.success(station);
+  });
+};
+
 /*
  * Find guesthouse by id
  */
 exports.guesthouse = function(req, res, next, id) {
-  console.log('id '+id);
+
   Guesthouse.load(id, function(err, guesthouse) {
       if (err){
         console.log('load error');
