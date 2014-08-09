@@ -22,7 +22,7 @@ describe('<Rotuing Test>', function() {
         type: 'Airport',
         loc: [35.549393, 139.779839],
         address: '3-3-2 Hanedakuko, Ota, Tokyo 144-0041 일본 222',
-        hidden: false
+        hidden: true
       });
       station.save(function(err) {
         should.not.exist(err);

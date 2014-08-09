@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Place = mongoose.model('Place');
+    Place = mongoose.model('Place'),
+    _ = require('lodash');
 
 exports.create = function(req, res, next) {
   var new_place = new Place(req.body);
@@ -38,4 +39,18 @@ exports.place = function(res, req, next, id) {
 
 exports.show = function(req, res) {
   res.success(req.place || null);
+};
+
+// Update place
+exports.update = function(req, res) {
+  var place = req.place;
+
+  place = _.extend(place, req.body);
+
+  place.save(function(err) {
+    if (err) {
+      return res.fail('30001');
+    }
+    res.success(place);
+  });
 };

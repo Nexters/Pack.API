@@ -17,8 +17,7 @@ angular.module('mean.stations').controller('StationsController', ['$scope', '$st
                 var station = new Stations({
                     name: this.name,
                     type: this.type,
-                    lat: this.lat,
-                    lng: this.lng,
+                    loc: this.loc,
                     address: this.address
                 });
                 station.$save(function(response) {
@@ -27,8 +26,7 @@ angular.module('mean.stations').controller('StationsController', ['$scope', '$st
 
                 this.name = '';
                 this.type = '';
-                this.lat = '';
-                this.lng = '';
+                this.loc = [];
                 this.address = '';
             } else {
                 $scope.submitted = true;

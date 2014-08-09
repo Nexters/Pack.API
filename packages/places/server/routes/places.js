@@ -9,6 +9,7 @@ module.exports = function(Places, app, auth, database) {
         .post(places.create);
 
     app.route('/places/:placeId')
+        .put(places.update)
         .get(places.show);
 
     // Finish with setting up the placeId param

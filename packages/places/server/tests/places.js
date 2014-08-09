@@ -11,7 +11,7 @@ describe('Model test', function (){
   beforeEach(function(done) {
     new_place = new Place({
       name: '에펠탑 test',
-      type: 'sightseeing',
+      type: 'Sightseeing',
       loc: [48.8583, 2.2945],
       near_station: new Station({
         name: '테스트 역',

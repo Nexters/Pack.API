@@ -18,10 +18,17 @@ Guesthouses.register(function(app, auth, database) {
 
     //We are adding a link to the main menu for all authenticated users
     Guesthouses.menus.add({
-        title: 'guesthouses example page',
-        link: 'guesthouses example page',
-        roles: ['authenticated'],
-        menu: 'main'
+        title: '게스트하우스 리스트',
+        link: 'all guesthouses',
+        roles: ['admin'],
+        menu: 'guesthouses'
+    });
+
+    Guesthouses.menus.add({
+        title: '새로운 게스트하우스 입력',
+        link: 'new guesthouse',
+        roles: ['admin'],
+        menu: 'guesthouses'
     });
 
     /**

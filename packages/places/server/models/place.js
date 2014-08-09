@@ -21,10 +21,10 @@ var PlaceSchema = new Schema({
       required: true,
       trim: true
   },
-  type: { type: String, enum:['sightseeing', 'food', 'store']},
+  type: { type: String, enum:['Sightseeing', 'Food', 'Store']},
   loc: { type: [Number], index:'2d'},
   near_station: { type: Schema.ObjectId, ref: 'Station'},
-  content: { type: String }
+  content: String
 });
 
 
@@ -32,7 +32,7 @@ var PlaceSchema = new Schema({
 PlaceSchema.statics.load = function(id, callback) {
   this.findOne({
     _id: id
-  }).populate('Station').exec(callback);
+  }).populate({ path: 'near_station', select: 'name' } ).exec(callback);
 };
 
 mongoose.model('Place', PlaceSchema);

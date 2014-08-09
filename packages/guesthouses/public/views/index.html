@@ -1,26 +1,25 @@
-<div class="" data-ng-controller="GuesthousesController">
-	<h1>Example view from your new awesome package</h1>
-	<h2>Package: {{package.name}}</h2>
-	<ol>
-		<li>
-			<a href="guesthouses/example/anyone">Server route that anyone can access</a>
-		</li>
-		<li>
-			<a href="guesthouses/example/auth">Server route that requires authentication</a>
-		</li>
-		<li>
-			<a href="guesthouses/example/admin">Server route that requires admin user</a>
-		</li>
-		<li>
-			<a href="guesthouses/example/render">Raw Html rendering example from using swig</a>
-		</li>
-	</ol>
-	<h3><img src="/guesthouses/assets/img/logo.png" /></h3>
-	</br>
-	<p class="alert alert-info">You can find your package in /packages/guesthouses</p>
-	</br>
-	<p class="alert alert-warning">MEAN versions prior to 0.3.2 will be in /node_modules/guesthouses</p>
-	</br>
-	<h3><a href="http://www.mean.io/#!/docs">Documentation</a></h3>
-	</br>
-</div>
+<section data-ng-controller="GuesthousesController" data-ng-init="find()">
+		<ul>
+				<li data-ng-repeat="guesthouse in guesthouses">
+						<span>{{date(guesthouse) | date:'medium'}}</span>
+						<h2>
+								<a data-ng-href="#!/guesthouses/{{guesthouse._id}}">{{guesthouse.name}}</a>
+								<span data-ng-if="hasAuthorization(guesthouse)">
+										<a class="btn" href="/#!/guesthouses/{{guesthouse._id}}/edit">
+												<i class="glyphicon glyphicon-edit"></i>
+										</a>
+										<a class="btn" data-ng-click="remove(guesthouse);">
+												<i class="glyphicon glyphicon-trash"></i>
+										</a>
+								</span>
+						</h2>
+						<div><label>위도 : </label> {{guesthouse.loc[0]}}</div>
+						<div><label>경도 : </label>{{guesthouse.loc[1]}}</div>
+						<div><label>주소 : </label>{{guesthouse.address}}</div>
+						<div><label>상세정보 : </label>{{guesthouse.info}}</div>
+						<div><label>주변 역들 : </label>{{guesthouse.near_stations}}</div>
+						<div><label>가격 : </label>{{guesthouse.price}}</div>
+				</li>
+		</ul>
+		<h1 data-ng-hide="!guesthouses || guesthouses.length">아직 게스트하우스 정보가 입력되지 않았습니다. <br> 새로운 <a href="/#!/guesthouses/create">게스트하우스 정보</a>를 입력하시겠습니까?</h1>
+</section>

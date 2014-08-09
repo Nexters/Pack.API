@@ -1,0 +1,18 @@
+<section data-ng-controller="GuesthousesController" data-ng-init="findOne()">
+    <span>{{date(guesthouse) | date:'medium'}}</span> /
+    <h2>{{guesthouse.name}}</h2>
+    <div data-ng-if="hasAuthorization(guesthouse)">
+        <a class="btn" href="/#!/guesthouses/{{guesthouse._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn" data-ng-click="remove(guesthouse);">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+    <div>{{guesthouse.loc[0]}}</div>
+    <div>{{guesthouse.loc[1]}}</div>
+    <div>{{guesthouse.address}}</div>
+    <div>{{guesthouse.info}}</div>
+    <div>{{guesthouse.near_stations}}</div>
+    <div>{{guesthouse.price}}</div>
+</section>

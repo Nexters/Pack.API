@@ -110,6 +110,8 @@ module.exports = function(grunt) {
             station_api: ['packages/stations/server/tests/**/stations_api.js'],
             place: ['packages/places/server/tests/**/places.js'],
             place_api: ['packages/places/server/tests/**/places_api.js'],
+            guesthouse: ['packages/guesthouses/server/tests/**/guesthouses.js'],
+            guesthouse_api: ['packages/guesthouses/server/tests/**/guesthouses_api.js'],
             coverage: {
               options: {
                 reporter: 'html-cov',

@@ -28,7 +28,7 @@ var GuesthouseSchema = new Schema({
     address: String,
     hidden: Boolean,
     near_stations: [{ type: Schema.Types.ObjectId, ref: 'Station' }],
-    price: Number
+    price: String
 });
 
 /**
@@ -36,7 +36,7 @@ var GuesthouseSchema = new Schema({
  */
 GuesthouseSchema.path('name').validate(function(name) {
     return !!name;
-}, 'Title cannot be blank');
+}, 'Name cannot be blank');
 
 
 /**
@@ -45,7 +45,7 @@ GuesthouseSchema.path('name').validate(function(name) {
 GuesthouseSchema.statics.load = function(id, cb) {
     this.findOne({
         _id: id
-    }).populate({ type: 'near_stations', select: 'name' }).exec(cb);
+    }).populate({path: 'near_stations', select: 'name'}).exec(cb);
 };
 
 GuesthouseSchema.statics.all = function(cb) {

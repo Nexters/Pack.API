@@ -11,6 +11,7 @@ var mongoose = require('mongoose'),
  * Show an Guesthouse
  */
 exports.show = function(req, res) {
+  console.log('show~!');
   res.success(req.guesthouse || null);
 };
 
@@ -33,6 +34,7 @@ exports.create = function(req, res, next) {
 exports.all = function(req, res) {
     Guesthouse.all(function(err, guesthouses) {
         if (err) {
+            console.log(err);
             return res.fail('40002');
         }
         res.success(guesthouses);
@@ -40,27 +42,35 @@ exports.all = function(req, res) {
 };
 
 /*
- * Find gusethouse by id
+ * Find guesthouse by id
  */
-exports.gusethouse = function(req, res, next, id) {
+exports.guesthouse = function(req, res, next, id) {
+  console.log('id '+id);
   Guesthouse.load(id, function(err, guesthouse) {
-      if (err) return next(err);
-      if (!guesthouse) return next(new Error(id+':Guesthouse 정보를 가져오는데 실패 했습니다.'));
+      if (err){
+        console.log('load error');
+        return next(err);
+      }
+      if (!guesthouse) {
+        return next(new Error(id+':Guesthouse 정보를 가져오는데 실패 했습니다.'));
+      }
+      console.log(guesthouse.name + '불러오기 성공!');
+
       req.guesthouse = guesthouse;
       next();
     });
 };
 
-// Updates gusethouse.
+// Updates guesthouse.
 exports.update = function(req, res) {
-  var gusethouse = req.gusethouse;
+  var guesthouse = req.guesthouse;
 
-  gusethouse = _.extend(gusethouse, req.body);
+  guesthouse = _.extend(guesthouse, req.body);
 
-  gusethouse.save(function(err) {
+  guesthouse.save(function(err) {
     if (err) {
       return res.fail('40001');
     }
-    res.success(gusethouse);
+    res.success(guesthouse);
   });
 };
