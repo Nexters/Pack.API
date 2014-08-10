@@ -1,7 +1,7 @@
 {
-    "name": "events",
+    "name": "stamps",
     "version": "0.0.1",
-    "description": "Some description of events",
+    "description": "Some description of stamps",
     "author": {
         "name": "mean scaffold"
     },

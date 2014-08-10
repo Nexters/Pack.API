@@ -7,9 +7,9 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 /**
- * Event Schema
+ * Stamp Schema
  */
-var EventSchema = new Schema({
+var StampSchema = new Schema({
     created: {
         type: Date,
         default: Date.now
@@ -20,12 +20,14 @@ var EventSchema = new Schema({
     name: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        enum: ['Help me', 'Grab a beer', 'Accident', 'Dangerous']
     },
     type: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        enum: ['help_me', 'grab_a_beer', 'accident', 'dangerous']
     },
     loc: { type: [Number], index: '2d'},
     hidden: Boolean
@@ -34,11 +36,11 @@ var EventSchema = new Schema({
 /**
  * Validations
  */
-EventSchema.path(['name']).validate(function(name) {
+StampSchema.path(['name']).validate(function(name) {
     return !!name;
 }, 'Name cannot be blank');
 
-EventSchema.path(['type']).validate(function(type) {
+StampSchema.path(['type']).validate(function(type) {
     return !!type;
 }, 'Type cannot be blank');
 
@@ -46,16 +48,16 @@ EventSchema.path(['type']).validate(function(type) {
 /**
  * Statics
  */
-EventSchema.statics ={
+StampSchema.statics ={
 
 };
 /**
  * Methods
  */
-EventSchema.methods = {
+StampSchema.methods = {
 
 };
 
-mongoose.model('Event', EventSchema);
+mongoose.model('Stamp', StampSchema);
 
-module.exports = EventSchema;
+module.exports = StampSchema;

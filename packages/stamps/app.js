@@ -5,30 +5,37 @@
  */
 var Module = require('meanio').Module;
 
-var Events = new Module('events');
+var Stamps = new Module('stamps');
 
 /*
  * All MEAN packages require registration
  * Dependency injection is used to define required modules
  */
-Events.register(function(app, auth, database) {
+Stamps.register(function(app, auth, database) {
 
     //We enable routing. By default the Package Object is passed to the routes
-    Events.routes(app, auth, database);
+    Stamps.routes(app, auth, database);
 
     //We are adding a link to the main menu for all authenticated users
-    Events.menus.add({
-        title: 'events example page',
-        link: 'events example page',
-        roles: ['authenticated'],
-        menu: 'main'
+    Stamps.menus.add({
+        title: '이벤트 리스트 보기.',
+        link: 'all stamps',
+        roles: ['admin'],
+        menu: 'stamps'
+    });
+
+    Stamps.menus.add({
+        title: '새로운 이벤트 생성하기.',
+        link: 'new stamp',
+        roles: ['admin'],
+        menu: 'stamps'
     });
 
     /**
     //Uncomment to use. Requires meanio@0.3.7 or above
     // Save settings with callback
     // Use this for saving data from administration pages
-    Events.settings({
+    Stamps.settings({
         'someSetting': 'some value'
     }, function(err, settings) {
         //you now have the settings object
@@ -36,15 +43,15 @@ Events.register(function(app, auth, database) {
 
     // Another save settings example this time with no callback
     // This writes over the last settings.
-    Events.settings({
+    Stamps.settings({
         'anotherSettings': 'some value'
     });
 
     // Get settings. Retrieves latest saved settigns
-    Events.settings(function(err, settings) {
+    Stamps.settings(function(err, settings) {
         //you now have the settings object
     });
     */
 
-    return Events;
+    return Stamps;
 });
