@@ -1,35 +1,35 @@
 'use strict';
 
-var events = require('../controllers/events'),
+var stamps = require('../controllers/stamps');
 
 // The Package is past automatically as first parameter
-module.exports = function(Events, app, auth, database) {
+module.exports = function(Stamps, app, auth, database) {
 
     //CRUD
-    app.route('/events')
-        .get(events.all)
-        .post(events.create);
+    app.route('/stamps')
+        .get(stamps.all)
+        .post(stamps.create);
 
-    app.route('/events/:eventId')
-        .put(events.update)
-        .get(events.show);
+    app.route('/stamps/:stampId')
+        .put(stamps.update)
+        .get(stamps.show);
 
-    app.param('eventId', events.event);
-    // app.get('/events/example/anyone', function(req, res, next) {
+    app.param('stampId', stamps.stamp);
+    // app.get('/stamps/example/anyone', function(req, res, next) {
     //     res.send('Anyone can access this');
     // });
     //
-    // app.get('/events/example/auth', auth.requiresLogin, function(req, res, next) {
+    // app.get('/stamps/example/auth', auth.requiresLogin, function(req, res, next) {
     //     res.send('Only authenticated users can access this');
     // });
     //
-    // app.get('/events/example/admin', auth.requiresAdmin, function(req, res, next) {
+    // app.get('/stamps/example/admin', auth.requiresAdmin, function(req, res, next) {
     //     res.send('Only users with Admin role can access this');
     // });
     //
-    // app.get('/events/example/render', function(req, res, next) {
-    //     Events.render('index', {
-    //         package: 'events'
+    // app.get('/stamps/example/render', function(req, res, next) {
+    //     Stamps.render('index', {
+    //         package: 'stamps'
     //     }, function(err, html) {
     //         //Rendering a view from the Package server/views
     //         res.send(html);
