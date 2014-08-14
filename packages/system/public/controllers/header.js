@@ -24,6 +24,8 @@ angular.module('mean.system').controller('HeaderController', ['$scope', '$rootSc
         queryMenu('users', defaultMainMenu);
         queryMenu('stations', defaultMainMenu);
         queryMenu('places', defaultMainMenu);
+        queryMenu('guesthouses', defaultMainMenu);
+        queryMenu('stamps', defaultMainMenu);
 
         $scope.isCollapsed = false;
 

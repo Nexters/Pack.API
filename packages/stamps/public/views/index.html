@@ -1,26 +1,19 @@
-<div class="" data-ng-controller="StampsController">
-	<h1>Example view from your new awesome package</h1>
-	<h2>Package: {{package.name}}</h2>
-	<ol>
-		<li>
-			<a href="stamps/example/anyone">Server route that anyone can access</a>
-		</li>
-		<li>
-			<a href="stamps/example/auth">Server route that requires authentication</a>
-		</li>
-		<li>
-			<a href="stamps/example/admin">Server route that requires admin user</a>
-		</li>
-		<li>
-			<a href="stamps/example/render">Raw Html rendering example from using swig</a>
-		</li>
-	</ol>
-	<h3><img src="/stamps/assets/img/logo.png" /></h3>
-	</br>
-	<p class="alert alert-info">You can find your package in /packages/stamps</p>
-	</br>
-	<p class="alert alert-warning">MEAN versions prior to 0.3.2 will be in /node_modules/stamps</p>
-	</br>
-	<h3><a href="http://www.mean.io/#!/docs">Documentation</a></h3>
-	</br>
-</div>
+<section data-ng-controller="StampsController" data-ng-init="find()">
+		<ul>
+				<li data-ng-repeat="stamp in stamps">
+						<span>{{date(stamp) | date:'medium'}}</span>
+						<h2>
+								<a data-ng-href="#!/stamps/{{stamp._id}}">{{stamp.type}}</a>
+								<span data-ng-if="hasAuthorization(stamp)">
+										<a class="btn" href="/#!/stamps/{{stamp._id}}/edit">
+												<i class="glyphicon glyphicon-edit"></i>
+										</a>
+										<a class="btn" data-ng-click="remove(stamp);">
+												<i class="glyphicon glyphicon-trash"></i>
+										</a>
+								</span>
+						</h2>
+				</li>
+		</ul>
+		<h1 data-ng-hide="!stamps || stamps.length">아직 스탬프 정보가 입력되지 않았습니다. <br> 새로운 <a href="/#!/stamps/create">스탬프 정보</a>를 입력하시겠습니까?</h1>
+</section>

@@ -18,15 +18,8 @@ Stamps.register(function(app, auth, database) {
 
     //We are adding a link to the main menu for all authenticated users
     Stamps.menus.add({
-        title: '이벤트 리스트 보기.',
+        title: '스탬프 리스트 보기',
         link: 'all stamps',
-        roles: ['admin'],
-        menu: 'stamps'
-    });
-
-    Stamps.menus.add({
-        title: '새로운 이벤트 생성하기.',
-        link: 'new stamp',
         roles: ['admin'],
         menu: 'stamps'
     });

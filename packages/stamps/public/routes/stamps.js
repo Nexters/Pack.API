@@ -30,20 +30,6 @@ angular.module('mean.stamps').config(['$stateProvider',
           loggedin: checkLoggedin
         }
       }).
-      state('new stamp', {
-        url:'/stamps/new',
-        templateUrl: 'stamps/views/new.html',
-        resolve:{
-          loggedin: checkLoggedin
-        }
-      }).
-      state('edit stamp', {
-        url:'/stamps/:stampId/edit',
-        templateUrl: 'stamps/views/edit.html',
-        resolve:{
-          loggedin: checkLoggedin
-        }
-      }).
       state('stamp', {
         url: '/stamps/:stampId',
         templateUrl: 'stamps/views/view.html',

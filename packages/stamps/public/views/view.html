@@ -1,0 +1,14 @@
+<section data-ng-controller="StampsController" data-ng-init="findOne()">
+    <span>{{date(stamp) | date:'medium'}}</span> /
+    <h2>{{stamp.type}}</h2>
+    <div data-ng-if="hasAuthorization(stamp)">
+        <a class="btn" href="/#!/stamps/{{stamp._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn" data-ng-click="remove(stamp);">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+    <div>{{stamp.loc[0]}}</div>
+    <div>{{stamp.loc[1]}}</div>
+</section>

@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Stamp = mongoose.model('StampStamp'),
+    Stamp = mongoose.model('Stamp'),
     _ = require('lodash');
 
 /**

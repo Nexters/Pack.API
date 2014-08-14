@@ -8,7 +8,7 @@ angular.module('mean.stamps').controller('StampsController', ['$scope', '$stateP
         };
 
         $scope.hasAuthorization = function(stamp) {
-            if (!stamp) return false;
+            //if (!stamp) return false;
             return $scope.global.isAdmin;
         };
 
